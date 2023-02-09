@@ -13,5 +13,10 @@ namespace TheEncoreAgenda.Data
         {
 
         }
+
+        public DbSet<Audio> Audios { get; set; }
+        public DbSet<Vote> Votes { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<CalendarEvent> CalendarEvents { get; set; }
     }
 }

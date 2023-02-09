@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TheEncoreAgenda.Data;
 
@@ -11,9 +12,10 @@ using TheEncoreAgenda.Data;
 namespace TheEncoreAgenda.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230209193357_Add_Audio_Vote_Comment_CalendarEvents")]
+    partial class Add_Audio_Vote_Comment_CalendarEvents
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +23,6 @@ namespace TheEncoreAgenda.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("ApplicationUserCalendarEvent", b =>
-                {
-                    b.Property<int>("CalendarEventsId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UsersId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("CalendarEventsId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("ApplicationUserCalendarEvent");
-                });
 
             modelBuilder.Entity("Duende.IdentityServer.EntityFramework.Entities.DeviceFlowCodes", b =>
                 {
@@ -416,41 +403,7 @@ namespace TheEncoreAgenda.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Audios");
-                });
-
-            modelBuilder.Entity("TheEncoreAgenda.Models.CalendarEvent", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("AllDay")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("End")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsPublic")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("RepeatNum")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Start")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CalendarEvents");
+                    b.ToTable("Audio");
                 });
 
             modelBuilder.Entity("TheEncoreAgenda.Models.Comment", b =>
@@ -477,7 +430,7 @@ namespace TheEncoreAgenda.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("TheEncoreAgenda.Models.Vote", b =>
@@ -504,22 +457,7 @@ namespace TheEncoreAgenda.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Votes");
-                });
-
-            modelBuilder.Entity("ApplicationUserCalendarEvent", b =>
-                {
-                    b.HasOne("TheEncoreAgenda.Models.CalendarEvent", null)
-                        .WithMany()
-                        .HasForeignKey("CalendarEventsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TheEncoreAgenda.Models.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.ToTable("Vote");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
