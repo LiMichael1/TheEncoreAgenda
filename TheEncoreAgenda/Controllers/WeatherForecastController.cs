@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration.UserSecrets;
+using System.Security.Claims;
 
 namespace TheEncoreAgenda.Controllers
 {
@@ -11,7 +13,7 @@ namespace TheEncoreAgenda.Controllers
         private static readonly string[] Summaries = new[]
         {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+        };
 
         private readonly ILogger<WeatherForecastController> _logger;
 
@@ -20,7 +22,7 @@ namespace TheEncoreAgenda.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet("")]
         public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
@@ -31,5 +33,14 @@ namespace TheEncoreAgenda.Controllers
             })
             .ToArray();
         }
+
+        [HttpGet("getUserId")]
+        public async Task<IActionResult> GetUserId()
+        {
+            string userId = User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            return Ok(userId);
+
+        }
+
     }
 }

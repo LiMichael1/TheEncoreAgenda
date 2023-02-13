@@ -10,7 +10,8 @@ export class FetchData extends Component {
   }
 
   componentDidMount() {
-    this.populateWeatherData();
+      this.populateWeatherData();
+      this.getUserId();
   }
 
   static renderForecastsTable(forecasts) {
@@ -54,10 +55,23 @@ export class FetchData extends Component {
 
   async populateWeatherData() {
     const token = await authService.getAccessToken();
-    const response = await fetch('weatherforecast', {
+    const response = await fetch(`weatherforecast`, {
       headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
     });
+
     const data = await response.json();
-    this.setState({ forecasts: data, loading: false });
+      this.setState({ forecasts: data, loading: false });
+
   }
+
+    async getUserId() {
+        const token = await authService.getAccessToken();
+        const response = await fetch(`weatherforecast/GetUserId`, {
+            headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+        });
+
+        const data = await response.text();
+
+        console.log(data);
+    }
 }

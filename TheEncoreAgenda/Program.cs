@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using TheEncoreAgenda.Data;
 using TheEncoreAgenda.Models;
 
@@ -20,7 +22,11 @@ builder.Services.AddIdentityServer()
     .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
 builder.Services.AddAuthentication()
-    .AddIdentityServerJwt();
+    .AddIdentityServerJwt()
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters.ValidateIssuer = false;
+    });
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

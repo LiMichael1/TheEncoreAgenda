@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -92,6 +94,7 @@ namespace TheEncoreAgenda.Controllers
 
         // POST: api/Comments
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(typeof(CalendarEvent), (StatusCodes.Status201Created))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -101,6 +104,13 @@ namespace TheEncoreAgenda.Controllers
           {
               return Problem("Entity set 'ApplicationDbContext.Comments'  is null.");
           }
+
+            if (comment.AudioId < 1 || comment.Message == String.Empty) return BadRequest();
+
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            comment.UserId = userId;
+
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
 

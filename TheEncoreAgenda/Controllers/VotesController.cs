@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using TheEncoreAgenda.Data;
 using TheEncoreAgenda.Models;
@@ -53,6 +55,30 @@ namespace TheEncoreAgenda.Controllers
             }
 
             return vote;
+        }
+
+
+        // GET: api/Votes/UserVotes
+        [Authorize]
+        [HttpGet("UserVotes")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(IEnumerable<Vote>), (StatusCodes.Status200OK))]
+        public async Task<ActionResult<IEnumerable<Vote>>> GetUserVotes()
+        {
+            if (_context.Votes == null)
+            {
+                return NotFound();
+            }
+
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+
+            List<Vote> votes = await _context.Votes.Where(x => x.UserId.Equals(userId)).ToListAsync();
+
+
+            if (votes.Count == 0) return NotFound("User has not liked anything yet!");
+
+            return Ok(votes);
         }
 
         // PUT: api/Votes/5
