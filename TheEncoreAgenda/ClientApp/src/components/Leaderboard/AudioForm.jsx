@@ -14,8 +14,12 @@ const AudioForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
   return (
-    <form action=''>
+    <form onSubmit={handleSubmit}>
       <div className='form-group'>
         <label htmlFor='Song'>Song</label>
         <input

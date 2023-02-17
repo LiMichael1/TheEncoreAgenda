@@ -98,14 +98,14 @@ namespace TheEncoreAgenda.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(CalendarEvent), (StatusCodes.Status201Created))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Comment>> PostComment(Comment comment)
+        public async Task<ActionResult<Comment>> PostComment([FromBody] Comment comment)
         {
           if (_context.Comments == null)
           {
               return Problem("Entity set 'ApplicationDbContext.Comments'  is null.");
           }
 
-            if (comment.AudioId < 1 || comment.Message == String.Empty) return BadRequest();
+            if (comment.AudioId < 1 || comment.Message == String.Empty) return BadRequest(comment.Message + " nothing here");
 
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
