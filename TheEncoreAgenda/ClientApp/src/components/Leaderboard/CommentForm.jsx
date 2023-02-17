@@ -6,9 +6,13 @@ const CommentForm = ({ audioId }) => {
   const handleChange = (event) => setMessage(event.target.value);
 
   // Need to Call API
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(audioId + ' ' + message);
+  };
 
   return (
-    <form action=''>
+    <form onSubmit={handleSubmit}>
       <div className='form-group'>
         <input
           type='hidden'

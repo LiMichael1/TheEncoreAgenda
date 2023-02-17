@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
@@ -21,12 +22,16 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddIdentityServer()
     .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
+
 builder.Services.AddAuthentication()
-    .AddIdentityServerJwt()
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters.ValidateIssuer = false;
-    });
+    .AddIdentityServerJwt();
+
+builder.Services.Configure<JwtBearerOptions>(
+    IdentityServerJwtConstants.IdentityServerJwtBearerScheme,
+    options => options.Authority = "https://localhost:44462"
+);
+
+
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

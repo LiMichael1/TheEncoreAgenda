@@ -1,0 +1,15 @@
+.board-card {
+  align-items: center;
+  border: 1px solid red;
+  border-radius: 10px;
+}
+
+.likeBtn,
+.tableBtn > button {
+  border: none;
+  background: none;
+}
+
+.playBtn {
+  border-radius: 50%;
+}
