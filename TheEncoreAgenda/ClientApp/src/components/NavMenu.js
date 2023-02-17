@@ -25,7 +25,7 @@ export class NavMenu extends Component {
   render() {
     return (
       <header>
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" container light>
+        <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white mb-3 nav" container light>
           <NavbarBrand tag={Link} to="/">TheEncoreAgenda</NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
           <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
@@ -38,6 +38,9 @@ export class NavMenu extends Component {
               </NavItem>
               <NavItem>
                 <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={Link} to="/calendar">Calendar</NavLink>
               </NavItem>
               <LoginMenu>
               </LoginMenu>

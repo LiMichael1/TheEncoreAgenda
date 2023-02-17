@@ -12,3 +12,84 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+body {
+    background-color: #230058;
+    color: white;
+}
+
+.nav {
+    background-color: rgb(112,66,195);
+    box-shadow: 0 0 2px rgb(112,66,195, .9), 0 0 4px rgb(112,66,195, .4), 0 0 1rem rgb(112,66,195, .3), 0 0 4rem rgb(112,66,195, .1);
+    color: white;
+}
+
+.nav a, .nav ul{
+    color: white !important;
+    text-shadow: 0 0 2px rgb(255, 255, 255, 0.64), 0 0 5px rgb(255, 255, 255, 0.46), 0 0 .5rem rgb(255, 255, 255, 0.35), 0 0 2rem rgb(255, 255, 255, 0.17);
+}
+
+.icon-size{
+    font-size: 1.75rem;
+}
+
+.weekCol{
+    width: 14%;
+    border: none;
+    background-color: #ea39b8 !important;
+}
+
+.card thead tr{
+    border: none;
+}
+
+.dayCol{
+    width: 14%;
+    vertical-align: top;
+}
+
+.colTop{
+    border-top: none;
+}
+
+.colLeft{
+    border-left: none;
+}
+
+.colBottom{
+    border-bottom: none;
+}
+
+.colRight{
+    border-right: none; 
+}
+
+.calRow{
+    height: 17%;
+}
+
+.card, .table{
+    color: white;
+}
+
+.calDisabled{
+    opacity: .5;
+}
+
+#calendar-body{
+    height: 75vh;
+    border-top: 1px;
+}
+
+.dateToday{
+    background-color: aquamarine;
+}
+
+.card .table{
+    margin: 0;
+    
+}
+
+.card{
+    background-color: transparent;
+}
