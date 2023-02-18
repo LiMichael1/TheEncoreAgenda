@@ -39,11 +39,8 @@ namespace TheEncoreAgenda.Controllers
                 return NotFound();
             }
 
-            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
             // Need to Adjust For More Efficient Query
             List<Audio> audios = await _context.Audios
-                                        .Include(x => x.User)
                                         .OrderByDescending(x => x.NumberOfLikes)
                                         .ToListAsync();
             return Ok(audios);
@@ -111,14 +108,14 @@ namespace TheEncoreAgenda.Controllers
         }
 
         // POST: api/Audios/Upvote
-        [HttpPost("Audio/Upvote")]
+        [HttpPost("Upvote/{audioId}")]
         public async Task<IActionResult> Upvote(int audioId)
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            Audio? audio = await _context.Audios.FindAsync(audioId);
+            var audio = await _context.Audios.FindAsync(audioId);
 
-            if (audio == null) return BadRequest();
+            if (audio == null) return BadRequest("audio missing");
 
             Vote? find = await _context.Votes.FirstOrDefaultAsync(x => x.AudioId == audioId && x.UserId == userId);
 
@@ -163,15 +160,12 @@ namespace TheEncoreAgenda.Controllers
         // POST: api/Audios
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [ProducesResponseType(typeof(Audio), (StatusCodes.Status201Created))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Audio>> PostAudio([FromBody] Audio audio, IFormFile? upload)
+        //[Consumes("multipart/form-data")]
+        //[ProducesResponseType(typeof(Audio), (StatusCodes.Status201Created))]
+        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Audio>> PostAudio([FromForm]Audio audio, IFormFile? upload)
         {
-          if (_context.Audios == null)
-          {
-              return Problem("Entity set 'ApplicationDbContext.Audios'  is null.");
-          }
-
             if (upload == null) return BadRequest();
 
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

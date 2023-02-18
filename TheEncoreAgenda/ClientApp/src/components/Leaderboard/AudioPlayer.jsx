@@ -1,20 +1,22 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const AudioPlayer = ({ src = '' }) => {
   // play it
-  const [source, setSource] = useState(src);
   const playerRef = useRef();
 
   useEffect(() => {
-    if (src != '') {
-      playerRef.load();
-      playerRef.play();
-    }
-  }, [source]);
+    const playMusic = () => {
+      if (src !== '') {
+        playerRef.current.load();
+        playerRef.current.play();
+      }
+    };
+    playMusic();
+  }, [src]);
 
   return (
     <audio id='player' controls preload='none' ref={playerRef}>
-      <source src={source} type='audio/mp3' />
+      <source src={src} type='audio/mp3' />
     </audio>
   );
 };
