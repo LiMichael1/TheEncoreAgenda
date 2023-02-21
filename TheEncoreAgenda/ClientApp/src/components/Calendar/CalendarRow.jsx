@@ -10,9 +10,6 @@ export default function CalendarRow(props) {
     const row = [];
     let today = new Date();
 
-  const row = [];
-  let today = new Date();
-
     for (let i = 0; i < 7; i++) {
         let classes = "";
         if (rowNum === 0) classes += "colTop ";
