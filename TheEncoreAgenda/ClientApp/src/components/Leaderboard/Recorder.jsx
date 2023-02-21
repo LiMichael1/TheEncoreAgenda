@@ -1,9 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const Recorder = () => {
+const Recorder = ({ setFile }) => {
   let [stream, setStream] = useState(null);
   let [recorder, setRecorder] = useState(null);
   const audioRef = useRef();
+
+  const [btnStates, setBtnStates] = useState({
+    capture: false,
+    start: true,
+    stop: true,
+  });
 
   useEffect(() => {
     console.log(stream, recorder);
@@ -13,10 +19,14 @@ const Recorder = () => {
     const obj = await getStreamAndRecorder();
     setRecorder(obj.rec);
     setStream(obj.stream);
+
+    setBtnStates({ ...btnStates, capture: true, start: false });
   };
 
   const handleStartBtnClick = (event) => {
+    console.log('good morning');
     recorder.start();
+    setBtnStates({ ...btnStates, start: true, stop: false });
   };
 
   const handleStopBtnClick = (event) => {
@@ -26,6 +36,7 @@ const Recorder = () => {
       track.enabled = false;
     });
     stream = null;
+    setBtnStates({ ...btnStates, stop: true, capture: false });
   };
 
   const getStreamAndRecorder = async () => {
@@ -75,6 +86,8 @@ const Recorder = () => {
 
       // Export Karaoke File
       audioRef.current.src = fileURL;
+
+      setFile(file);
     };
 
     return { stream, rec };
@@ -86,6 +99,8 @@ const Recorder = () => {
         id='captureBtn'
         className='btn btn-light'
         onClick={handleCaptureBtnClick}
+        // ref={captureBtnRef}
+        disabled={btnStates.capture}
       >
         Capture
       </button>
@@ -93,6 +108,8 @@ const Recorder = () => {
         id='startBtn'
         className='btn btn-primary'
         onClick={handleStartBtnClick}
+        // ref={startBtnRef}
+        disabled={btnStates.start}
       >
         Start Recording
       </button>
@@ -100,14 +117,12 @@ const Recorder = () => {
         id='stopBtn'
         className='btn btn-danger'
         onClick={handleStopBtnClick}
+        // ref={stopBtnRef}
+        disabled={btnStates.stop}
       >
         Stop Recording
       </button>
       <audio controls ref={audioRef}></audio>
-      <audio
-        controls
-        src='https://encorestorage.blob.core.windows.net/audiocontainer/06f86c40-6c24-4151-88f0-0503939c82ec.mp3'
-      ></audio>
     </div>
   );
 };

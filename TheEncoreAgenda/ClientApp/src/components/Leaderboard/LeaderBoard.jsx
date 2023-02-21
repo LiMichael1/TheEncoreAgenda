@@ -8,11 +8,20 @@ import Spinner from '../global/Spinner/Spinner.component';
 import { boardData } from '../../utils/sampleData';
 
 const LeaderBoard = () => {
-  const [items, setItems] = useState(boardData);
+  const [items, setItems] = useState([]);
   const [music, setMusic] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+      const fetchBoardData = async () => {
+          console.log('good morning');
+          const res = await fetch('https://localhost:44383/api/audios');
+          const data = await res.json();
+
+          setItems(data);
+    };
+    fetchBoardData();
+  }, []);
 
   const playMusic = (URL) => setMusic(URL);
 

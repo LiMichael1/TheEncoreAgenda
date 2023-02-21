@@ -32,6 +32,14 @@ builder.Services.Configure<JwtBearerOptions>(
 );
 
 
+builder.Services.AddCors(options => {
+    options.AddDefaultPolicy(
+        policy => {
+            policy.WithOrigins("https://localhost:44462");
+            }
+        );
+});
+
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
@@ -52,6 +60,8 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+
+app.UseCors();
 
 app.UseAuthentication();
 app.UseIdentityServer();

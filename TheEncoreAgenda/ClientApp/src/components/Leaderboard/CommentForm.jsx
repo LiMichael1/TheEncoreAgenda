@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const CommentForm = ({ audioId }) => {
+const CommentForm = ({ audioId, addComment }) => {
   const [message, setMessage] = useState('');
 
   const handleChange = (event) => setMessage(event.target.value);
@@ -8,7 +8,15 @@ const CommentForm = ({ audioId }) => {
   // Need to Call API
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(audioId + ' ' + message);
+
+    const comment = {
+      User: {
+        Email: 'jeffBezos@amazon.com',
+      },
+      Message: message,
+    };
+
+    addComment(comment);
   };
 
   return (
@@ -29,7 +37,9 @@ const CommentForm = ({ audioId }) => {
           vaiue={message}
           onChange={handleChange}
         />
-        <button type='submit'>Submit</button>
+        <button type='submit' className='btn btn-primary'>
+          Submit
+        </button>
       </div>
     </form>
   );
