@@ -22,15 +22,12 @@ body {
     /*background-color: rgb(112,66,195);*/
     box-shadow: 0 2px 7px rgb(129, 104, 174, 0.90), 0 0 4px rgb(129, 104, 174, .4), 0 0 1rem rgb(129, 104, 174, .3), 0 0 4rem rgb(129, 104, 174, .1);
     color: white;
+    margin-bottom: 50px;
 }
 
 .nav a, .nav ul, #monthAndYear, tr{
     color: white !important;
     text-shadow: 0 0 4px rgb(255, 255, 255, 0.75), 0 0 5px rgb(255, 255, 255, 0.55), 0 0 .5rem rgb(255, 255, 255, 0.35), 0 0 2rem rgb(255, 255, 255, 0.17);
-}
-
-.icon-size{
-    font-size: 1.75rem;
 }
 
 .weekCol {
@@ -100,4 +97,10 @@ body {
 
 .card{
     background-color: transparent;
+}
+
+.card-icons {
+    position: relative;
+    text-align: right;
+    font-size: 1.75rem;
 }

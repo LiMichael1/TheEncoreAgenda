@@ -18,8 +18,8 @@ let currentYear = today.getFullYear();
 let selectYear = document.getElementById("year");
 let selectMonth = document.getElementById("month");
 
-export function getCurrentMonth() {
-    return months[currentMonth];
+export function getCurrentMonth(monthNum) {
+    return months[monthNum];
 }
 
 export function getCurrentMonthDate() {
@@ -40,13 +40,15 @@ let monthAndYear = document.getElementById("monthAndYear");
 export function next() {
     currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
     currentMonth = (currentMonth + 1) % 12;
-    showCalendar(currentMonth, currentYear);
+    console.log(currentMonth + " " + currentYear);
+    return [currentMonth, currentYear];
 }
 
 export function previous() {
     currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
     currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
-    showCalendar(currentMonth, currentYear);
+    console.log(currentMonth + " " + currentYear);
+    return[currentMonth, currentYear];
 }
 
 // function for the jump that is hidden bu the sliding function at top of this file

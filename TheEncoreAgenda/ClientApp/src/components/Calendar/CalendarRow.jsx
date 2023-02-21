@@ -2,6 +2,7 @@
 
 export default function CalendarRow(props) {
     const { firstDay, rowNum, daysInMonth, month, year } = props;
+    
     let date = 1;
     const daysInPrevMonth = getPrevMonth(month, year);
    
@@ -25,6 +26,7 @@ export default function CalendarRow(props) {
         else if (date > daysInMonth) {
             classes += "calDisabled ";
             row.push(<CalendarCell date={date - daysInMonth} className={classes} />);
+            date++;
         }
         else {
             if (today.getDate() === date && today.getFullYear() === year && today.getMonth() === month) {
@@ -32,8 +34,9 @@ export default function CalendarRow(props) {
                 row.push(<CalendarCell date={date} className={classes} />);
             }
             else row.push(<CalendarCell date={date} className={classes} />);
+            date++;
         }
-        date++;
+        
     }
 
     if (rowNum === 0) return <tr className="calRow colTop">{row}</tr>;
