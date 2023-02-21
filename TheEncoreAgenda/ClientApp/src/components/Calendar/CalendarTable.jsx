@@ -1,6 +1,8 @@
 ﻿import CalendarRow from "./CalendarRow";
 
-export default function CalendarTable({ month, year }) {
+export default function CalendarTable({ calendar }) {
+    const month = calendar.month;
+    const year = calendar.year;
     return (
         <table className="table table-bordered">
             <thead>
@@ -21,15 +23,15 @@ export default function CalendarTable({ month, year }) {
 
 function showCalendarInternal(month, year) {
     let firstDay = (new Date(year, month)).getDay();
-    
+    console.log(month + " " + year);
     let daysInMonth = 32 - new Date(year, month, 32).getDate();
     
     const rows = [];
 
     let date = 1;
     for (let i = 0; i < 6; i++) {
-        
-        rows.push(<CalendarRow date={date} firstDay={firstDay} rowNum={i} daysInMonth={daysInMonth} month={month} year={year} />);
+        console.log(firstDay);
+        rows.push(<CalendarRow key={i} date={date} firstDay={firstDay} rowNum={i} daysInMonth={daysInMonth} month={month} year={year} />);
         //date = 
     }
     return rows;

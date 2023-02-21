@@ -46,3 +46,28 @@ const boardData = [
 ];
 
 export { boardData };
+
+const eventData = [
+    {
+        EventId: '1',
+        LeaderBoardId: '1', 
+        Start: '2/24/2023',
+        End: '2/27/2023',
+        AllDay: 'true',
+        Title: 'Pre-Spring Karaoke Weekend',
+        Description: 'The last Karaoke event prior to the spring events starting in March',
+        RepeatNum: '0'
+    },
+    {
+        EventId: '2',
+        LeaderBoardId: '2',
+        Start: '2/22/2023',
+        End: '2/23/2023',
+        AllDay: 'false',
+        Title: 'All nighter with friends!',
+        Description: 'Event created by user to sing all night with their friends idk',
+        RepeatNum: '3'
+    }
+];
+
+export { eventData };
