@@ -45,4 +45,25 @@ const boardData = [
   },
 ];
 
-export { boardData };
+const commentData = [
+  {
+    User: {
+      Email: 'michael@genspark.net',
+    },
+    Message: 'Good morning',
+  },
+  {
+    User: {
+      Email: 'Antonio@sky.net',
+    },
+    Message: 'Terrific',
+  },
+  {
+    User: {
+      Email: 'Richardo@mail.com',
+    },
+    Message: 'Insane',
+  },
+];
+
+export { boardData, commentData };

@@ -1,14 +1,17 @@
 ﻿import React from 'react';
 
 const LeaderBoardItem = ({ item, playMusic }) => {
+  const likeClick = (event) => {};
+
   return (
     <div className='row board-card'>
       <div className='col-3'>
         {/* Votes Here*/}
         <div className='score'>
-          <button className='likeBtn'>
-            <i className='bi bi-hand-thumbs-up-fill'></i>
+          <button className='likeBtn' onClick={likeClick}>
+            <i className='bi bi-chevron-up'></i>
           </button>
+          <h3 className='voteCount'>{item.numberOfLikes}</h3>
         </div>
       </div>
       <div className='col-3'>
@@ -16,7 +19,7 @@ const LeaderBoardItem = ({ item, playMusic }) => {
         <button
           className='playBtn'
           onClick={() => {
-            playMusic(item.AudioPath);
+            playMusic(item.audioPath);
           }}
         >
           <i className='bi bi-play-fill'></i>
@@ -28,13 +31,13 @@ const LeaderBoardItem = ({ item, playMusic }) => {
           <span className='userText'>{item.User.Email}</span>
         </p> */}
         <p>
-          <span className='neonText'>{item.Song}</span>
+          <span className='neonText'>{item.song}</span>
         </p>
         <p>
-          <span className='neonText'>{item.OriginalArtist}</span>
+          <span className='neonText'>{item.originalArtist}</span>
         </p>
         <p>
-          <span className='neonText'>{item.SubmittedOn}</span>
+          <span className='neonText'>{item.submittedOn}</span>
         </p>
       </div>
       <div className='col d-flex'>

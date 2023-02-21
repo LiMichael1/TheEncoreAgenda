@@ -3,8 +3,9 @@ import { FetchData } from './components/FetchData';
 import { Home } from './components/Home';
 import LeaderBoardPage from './components/Pages/LeaderBoard/LeaderBoardPage';
 import LeaderBoardCreate from './components/Pages/LeaderBoard/LeaderBoardCreate';
-import { Counter } from "./components/Counter";
-import CalendarPage from "./components/Pages/CalendarPage";
+import LeaderBoardDetails from './components/Pages/LeaderBoard/LeaderBoardDetails';
+import { Counter } from './components/Counter';
+import CalendarPage from './components/Pages/CalendarPage';
 
 const AppRoutes = [
   {
@@ -25,10 +26,14 @@ const AppRoutes = [
     element: <LeaderBoardCreate />,
   },
   {
-    path: '/calendar', 
-    element: <CalendarPage/>
+    path: '/Leaderboard/Details/:id',
+    element: <LeaderBoardDetails />,
   },
-  ...ApiAuthorzationRoutes
+  {
+    path: '/calendar',
+    element: <CalendarPage />,
+  },
+  ...ApiAuthorzationRoutes,
 ];
 
 export default AppRoutes;
