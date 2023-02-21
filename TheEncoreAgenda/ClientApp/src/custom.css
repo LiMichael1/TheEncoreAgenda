@@ -14,13 +14,13 @@ code {
 }
 
 body {
-    background-color: #230058;
+    background: linear-gradient(#12002e, #432874) no-repeat fixed;
     color: white;
 }
 
 .nav {
     /*background-color: rgb(112,66,195);*/
-    box-shadow: 0 2px 7px rgb(129, 104, 174, 0.90), 0 0 4px rgb(129, 104, 174, .4), 0 0 1rem rgb(129, 104, 174, .3), 0 0 4rem rgb(129, 104, 174, .1);
+    box-shadow: 0 8px 25px rgb(129, 104, 174, 0.90), 0 0 4px rgb(129, 104, 174, .4), 0 0 1rem rgb(129, 104, 174, .3), 0 0 4rem rgb(129, 104, 174, .1);
     color: white;
     margin-bottom: 50px;
 }
