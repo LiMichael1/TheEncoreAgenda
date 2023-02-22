@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 const defaultState = {
   song: '',
@@ -27,18 +28,17 @@ const AudioForm = ({ data = defaultState, file = null }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async(event) => {
-      event.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-      const data = new FormData();
+    const data = new FormData();
 
-
-      const res = await fetch('audios', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'multipart/form-data'           
-          }
-      })
+    const res = await fetch('audios', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
   };
 
   return (
@@ -72,8 +72,14 @@ const AudioForm = ({ data = defaultState, file = null }) => {
           ref={fileInputRef}
         />
       </div>
-      <div className='form-control'>
-        <button type='submit'>Create</button>
+      <div>
+        <button type='submit' className='btn btn-success'>
+          Create
+        </button>
+      </div>
+
+      <div className='mt-3 text-center'>
+        <Link to='/leaderboard/create'>Create Your Own</Link>
       </div>
     </form>
   );

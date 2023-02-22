@@ -8,17 +8,16 @@ import Spinner from '../global/Spinner/Spinner.component';
 import { boardData } from '../../utils/sampleData';
 
 const LeaderBoard = () => {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(boardData);
   const [music, setMusic] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-      const fetchBoardData = async () => {
-          console.log('good morning');
-          const res = await fetch('https://localhost:44383/api/audios');
-          const data = await res.json();
+    const fetchBoardData = async () => {
+      const res = await fetch('https://localhost:44383/api/audios');
+      const data = await res.json();
 
-          setItems(data);
+      setItems(data);
     };
     fetchBoardData();
   }, []);
@@ -29,6 +28,7 @@ const LeaderBoard = () => {
 
   return (
     <div className='leaderBoard'>
+      <h2 className='page-header-text'>Champion's LeaderBoard</h2>
       <div className='d-flex justify-content-between'>
         <div>
           <AudioPlayer src={music} />
@@ -39,7 +39,7 @@ const LeaderBoard = () => {
             onClick={() => {
               showModal();
             }}
-            className=''
+            className='glow-button'
           >
             Create New
           </button>
