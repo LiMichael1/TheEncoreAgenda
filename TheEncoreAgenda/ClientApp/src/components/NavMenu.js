@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+import {
+  Collapse,
+  Navbar,
+  NavbarBrand,
+  NavbarToggler,
+  NavItem,
+  NavLink,
+} from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { LoginMenu } from './api-authorization/LoginMenu';
 import './NavMenu.css';
@@ -7,43 +14,60 @@ import './NavMenu.css';
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
 
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
-      collapsed: true
+      collapsed: true,
     };
   }
 
-  toggleNavbar () {
+  toggleNavbar() {
     this.setState({
-      collapsed: !this.state.collapsed
+      collapsed: !this.state.collapsed,
     });
   }
 
   render() {
     return (
       <header>
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white nav" container light>
-          <NavbarBrand tag={Link} to="/">TheEncoreAgenda</NavbarBrand>
-          <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-          <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
-            <ul className="navbar-nav flex-grow">
+        <Navbar
+          className='navbar-expand-sm navbar-toggleable-sm ng-white nav'
+          container
+          light
+        >
+          <NavbarBrand tag={Link} to='/' className='navbar-brand'>
+            The Encore Agenda
+          </NavbarBrand>
+          <NavbarToggler onClick={this.toggleNavbar} className='mr-2' />
+          <Collapse
+            className='d-sm-inline-flex flex-sm-row-reverse'
+            isOpen={!this.state.collapsed}
+            navbar
+          >
+            <ul className='navbar-nav flex-grow'>
               <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
+                <NavLink tag={Link} className='text-dark' to='/'>
+                  Home
+                </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
+                <NavLink tag={Link} className='text-dark' to='/fetch-data'>
+                  Fetch data
+                </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/Leaderboard">LeaderBoard</NavLink>
+                <NavLink tag={Link} className='text-dark' to='/Leaderboard'>
+                  LeaderBoard
+                </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink tag={Link} to="/calendar">Calendar</NavLink>
+                <NavLink tag={Link} to='/calendar'>
+                  Calendar
+                </NavLink>
               </NavItem>
-              <LoginMenu>
-              </LoginMenu>
+              <LoginMenu></LoginMenu>
             </ul>
           </Collapse>
         </Navbar>

@@ -17,12 +17,12 @@ const Modal = ({ title = 'Title', children, show, setShow }) => {
   }, [show]);
 
   return (
-    <div className='modal fade' id='modal' ref={modalRef}>
+    <div className='modal fade' id='modal' role='dialog' ref={modalRef}>
       <div className='modal-dialog' id='modal-dialog' role='document'>
         <div className='modal-content' id='modal-content'>
           {/* Modal Header */}
           <div className='modal-header'>
-            <h3 className='text-center text-danger'>{title}</h3>
+            <h3>{title}</h3>
             <a className='closeModal' onClick={() => setShow(false)}>
               <i className='bi bi-x'></i>
             </a>
