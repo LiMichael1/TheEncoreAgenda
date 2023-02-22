@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import { Link } from 'react-router-dom';
 
 const LeaderBoardItem = ({ item, playMusic }) => {
   const likeClick = (event) => {};
@@ -8,7 +9,7 @@ const LeaderBoardItem = ({ item, playMusic }) => {
       <div className='col-3'>
         {/* Votes Here*/}
         <div className='score'>
-          <button className='likeBtn' onClick={likeClick}>
+          <button className='like-btn' onClick={likeClick}>
             <i className='bi bi-chevron-up'></i>
           </button>
           <h3 className='voteCount'>{item.numberOfLikes}</h3>
@@ -17,7 +18,7 @@ const LeaderBoardItem = ({ item, playMusic }) => {
       <div className='col-3'>
         {/* Play Button Here */}
         <button
-          className='playBtn'
+          className='play-btn'
           onClick={() => {
             playMusic(item.audioPath);
           }}
@@ -27,9 +28,9 @@ const LeaderBoardItem = ({ item, playMusic }) => {
       </div>
       <div className='col-4 mt-3'>
         {/* Information Here */}
-        {/* <p>
-          <span className='userText'>{item.User.Email}</span>
-        </p> */}
+        <p>
+          <span className='userText'>{item.user.email}</span>
+        </p>
         <p>
           <span className='neonText'>{item.song}</span>
         </p>
@@ -41,17 +42,20 @@ const LeaderBoardItem = ({ item, playMusic }) => {
         </p>
       </div>
       <div className='col d-flex'>
-        <div className='tableBtn'>
+        <div className='table-btn'>
           {/* Buttons Here */}
-          <button>
+          <Link
+            to={`/leaderboard/details/${item.audioId}`}
+            className='details-btn'
+          >
             <i className='bi bi-chat-fill'></i>
-          </button>
-          <button>
+          </Link>
+          <Link to='#' className='edit-btn'>
             <i className='bi bi-pen'></i>
-          </button>
-          <button>
+          </Link>
+          <Link to='#' className='delete-btn'>
             <i className='bi bi-x-circle-fill'></i>
-          </button>
+          </Link>
         </div>
       </div>
     </div>
