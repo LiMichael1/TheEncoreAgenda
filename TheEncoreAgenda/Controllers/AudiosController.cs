@@ -81,7 +81,7 @@ namespace TheEncoreAgenda.Controllers
                                                SubmittedOn = x.SubmittedOn,
                                                AudioPath = x.AudioPath,
                                                NumberOfLikes = x.NumberOfLikes,
-                                               UserName = x.User?.Email,
+                                               UserName = x.User.Email,
                                            })
                                            .SingleOrDefaultAsync();
                                       

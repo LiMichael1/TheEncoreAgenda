@@ -32,6 +32,7 @@ export const ShowProvider = ({ children }) => {
     const [eventType, setEventType] = useState("New");
     const [eventInfo, setEventInfo] = useState(defaultEventInfo);
     const [events, setEvents] = useState([]);
+    const [matchEvents, setMatchEvents] = useState({});
 
     //console.log(eventInfo);
 
@@ -43,7 +44,9 @@ export const ShowProvider = ({ children }) => {
         eventInfo,
         setEventInfo,
         events,
-        setEvents
+        setEvents,
+        matchEvents,
+        setMatchEvents,
     };
 
     

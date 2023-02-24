@@ -5,7 +5,8 @@ import { ShowContext } from './ShowContext';
 export default function CalendarCell(props) {
     let { date, className } = props;
     const { setIsOpen, events } = useContext(ShowContext);
-    const list = events.filter(x => checkDate(x.start, x.end, date));
+    let list = [];
+    //list = events.filter(x => checkDate(x.start, x.end, date));
     
     if (className !== null) {
         className += " dayCol";
@@ -15,8 +16,8 @@ export default function CalendarCell(props) {
 
         <td className={className} onClick={e => { setIsOpen(true) }}>
             {date}
-            
-            {list ? list.map(event => <CalendarEvent event={event} />) : ""}
+
+        {/*    {list && !className.includes('calDisabled') ? list.map((event, index) => <CalendarEvent key={index} event={event} />) : ""}*/}
         </td>
         
     );

@@ -40,6 +40,7 @@ export default function CalendarModal() {
 
         setIsOpen(false);
         setEventInfo(defaultEventInfo);
+
     }
 
     function deleteEvent() {
@@ -58,7 +59,6 @@ export default function CalendarModal() {
             setEventInfo({ ...eventInfo, [event.target.name]: event.target.checked });
         }
         else setEventInfo({ ...eventInfo, [event.target.name]: event.target.value });
-        console.log(eventInfo.description)
     }
 
     return (

@@ -1,16 +1,18 @@
-﻿//import { ShowContext, defaultEventInfo } from './ShowContext';
-//import { useContext } from 'react';
+﻿import { useContext } from 'react';
+import { ShowContext, defaultEventInfo } from './ShowContext';
 
+const CalendarEvent = ({ event: {title, description, start, end, allDay } = defaultEventInfo }) => {
 
-
-function CalendarEvent() {
-
-    //const { setIsOpen, setEventType } = useContext(ShowContext);
-    //function editEvent() {
-    //    setIsOpen(true);
-    //    setEventType("Edit");
-    //}
-    return <div>nothing</div>;
+    const { setIsOpen, setEventType } = useContext(ShowContext);
+    function editEvent() {
+        setIsOpen(true);
+        setEventType("Edit");
+    }
+    return (
+        <div>
+            {title} 
+        </div>
+    );
 }
 
-export default CalendarEvent();
+export default CalendarEvent;
