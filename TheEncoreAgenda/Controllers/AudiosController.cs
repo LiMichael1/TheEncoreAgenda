@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TheEncoreAgenda.Data;
+using TheEncoreAgenda.DTO;
 using TheEncoreAgenda.Models;
 using TheEncoreAgenda.Utils;
 
@@ -30,9 +31,9 @@ namespace TheEncoreAgenda.Controllers
         // GET: api/Audios
         [AllowAnonymous]
         [HttpGet]
-        [ProducesResponseType(typeof(List<Audio>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<AudioDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<Audio>>> GetAudios()
+        public async Task<ActionResult<IEnumerable<AudioDTO>>> GetAudios()
         {
             if (_context.Audios == null)
             {
@@ -40,8 +41,18 @@ namespace TheEncoreAgenda.Controllers
             }
 
             // Need to Adjust For More Efficient Query
-            List<Audio> audios = await _context.Audios
-                                        .OrderByDescending(x => x.NumberOfLikes)
+            List<AudioDTO> audios = await _context.Audios
+                                        .Select(x => new AudioDTO
+                                        {
+                                            AudioId = x.AudioId,
+                                            UserId = x.UserId,
+                                            Song = x.Song,
+                                            OriginalArtist = x.OriginalArtist,
+                                            SubmittedOn = x.SubmittedOn,
+                                            AudioPath = x.AudioPath,
+                                            NumberOfLikes = x.NumberOfLikes,
+                                            UserName = x.User.Email,
+                                        })
                                         .ToListAsync();
             return Ok(audios);
 
@@ -52,15 +63,28 @@ namespace TheEncoreAgenda.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(Audio), (StatusCodes.Status200OK))]
-        public async Task<ActionResult<Audio>> GetAudio(int id)
+        [ProducesResponseType(typeof(AudioDTO), (StatusCodes.Status200OK))]
+        public async Task<ActionResult<AudioDTO>> GetAudio(int id)
         {
           if (_context.Audios == null)
           {
               return NotFound();
           }
-            var audio = await _context.Audios.FindAsync(id);
-
+            AudioDTO? audio = await _context.Audios
+                                           .Where(x => x.AudioId == id)
+                                           .Select(x => new AudioDTO
+                                           {
+                                               AudioId = x.AudioId,
+                                               UserId = x.UserId,
+                                               Song = x.Song,
+                                               OriginalArtist = x.OriginalArtist,
+                                               SubmittedOn = x.SubmittedOn,
+                                               AudioPath = x.AudioPath,
+                                               NumberOfLikes = x.NumberOfLikes,
+                                               UserName = x.User?.Email,
+                                           })
+                                           .SingleOrDefaultAsync();
+                                      
             if (audio == null)
             {
                 return NotFound();

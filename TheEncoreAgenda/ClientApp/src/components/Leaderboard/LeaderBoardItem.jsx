@@ -29,9 +29,6 @@ const LeaderBoardItem = ({ item, playMusic, liked }) => {
         }
     };
 
-    
-
-
   return (
     <div className='row board-card'>
       <div className='col-3'>
@@ -57,7 +54,7 @@ const LeaderBoardItem = ({ item, playMusic, liked }) => {
       <div className='col-4 mt-3'>
         {/* Information Here */}
         <p>
-          <span className='userText'>{item.user ? item.user.email : 'Email Here'}</span>
+          <span className='userText'>{item.userName}</span>
         </p>
         <p>
           <span className='neonText'>{item.song}</span>
@@ -82,7 +79,7 @@ const LeaderBoardItem = ({ item, playMusic, liked }) => {
             <i className='bi bi-pen'></i>
           </Link>
           <Link to='#' className='delete-btn'>
-            <i className='bi bi-x-circle-fill'></i>
+            <i className='bi bi-x'></i>
           </Link>
         </div>
       </div>

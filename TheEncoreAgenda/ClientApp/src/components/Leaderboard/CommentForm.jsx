@@ -13,6 +13,11 @@ const CommentForm = ({ audioId, addComment }) => {
 
         const token = await authService.getAccessToken();
 
+        if (token == null) {
+            console.error('Not Authenticated');
+            return;
+        } 
+
         const formData = new FormData();
         formData.append('Message', message);
         formData.append('AudioId', audioId);
