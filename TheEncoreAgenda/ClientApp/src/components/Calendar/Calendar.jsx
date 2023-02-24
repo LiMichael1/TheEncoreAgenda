@@ -1,25 +1,30 @@
 ﻿import CalendarCard from "./CalendarCard";
 import CalendarTable from "./CalendarTable";
-import { getCurrentMonth, getCurrentMonthDate, getCurrentYear } from "./CalendarFunctions";
+import { getCurrentMonthDate, getCurrentYear } from "./CalendarFunctions";
 import { useState } from "react";
+import CalendarModal from './CalendarModal';
+import { ShowProvider } from './ShowContext';
 
 function Calendar() {
-    //const title = getTitle();
-    //const month = getCurrentMonth();
-    //const monthDate = getCurrentMonthDate();
-    //const year = getCurrentYear();
-    //const [ monthDate, year ] = getMonthAndYear();
-    //const month = getCurrentMonth();
 
     const [calendar, setCalendar] = useState({ month: getCurrentMonthDate(), year: getCurrentYear() });
+    //const [show, setShow] = useState(false);
+    //const [eventType, setEventType] = useState("");
+
+    //const modalData = {
+    //    show: [show, setShow],
+    //    eventType: [eventType, setEventType]
+    //};
 
     return (
         <div className="container">
-            <div className="card">
-                <CalendarCard calendar={calendar} setCalendar={setCalendar} />
-                <CalendarTable calendar={calendar} setCalendar={setCalendar} />
-            </div>
-            
+            <ShowProvider>
+                <CalendarModal />
+                <div className="card">
+                    <CalendarCard calendar={calendar} setCalendar={setCalendar} />
+                    <CalendarTable calendar={calendar} setCalendar={setCalendar} />
+                </div>
+            </ShowProvider>
         </div>
         )
 }

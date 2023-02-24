@@ -80,7 +80,7 @@ tr {
 }
 
 .calRow {
-  height: 17%;
+  height: 16.66%;
 }
 
 .card,
@@ -111,6 +111,7 @@ tr {
 
 .card {
   background-color: transparent;
+  top: -15px;
 }
 
 .card-icons {
@@ -122,4 +123,8 @@ tr {
 .bi-arrow-left-short:hover,
 .bi-arrow-right-short:hover {
   color: red;
+}
+
+.show{
+    display: block !important;
 }
