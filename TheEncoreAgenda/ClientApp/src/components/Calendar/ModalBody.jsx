@@ -1,5 +1,15 @@
-﻿
+﻿import { useContext } from 'react';
+import { ShowContext } from './ShowContext';
+
 export default function ModalBody() {
+
+    const { setIsOpen, eventType, eventInfo, setEventInfo } = useContext(ShowContext);
+    const { title, desc, allDay, start, end } = eventInfo;
+
+
+    if (eventType === "New") {
+
+    }
 
     return (
         <div className="modal-body">
@@ -9,14 +19,14 @@ export default function ModalBody() {
                         <label htmlFor="titleOfEvent" >Title</label>
                     </div>
                     <div className="col-10">
-                        <input type="text" className="form-control" id="eventTitle" defaultValue="" required />
+                        <input type="text" className="form-control" id="eventTitle" defaultValue="" value={title} required />
                     </div>
 
 
                 </div>
                 <div className="form-group" style={{ width: "100%" }} >
                     <label htmlFor="exampleTextarea" className="form-label mt-4">Description</label>
-                    <textarea className="form-control" id="eventDescription" rows="3" defaultValue="" />
+                    <textarea className="form-control" id="eventDescription" rows="3" defaultValue="" value={desc} />
                 </div>
 
             </div>
@@ -30,7 +40,7 @@ export default function ModalBody() {
                     <input type="date" id="eventEnd" className="form-control" defaultValue="" required />
                     <div className="form-check form-switch">
                         <label className="form-check-label" htmlFor="allDayCheck">All Day</label>
-                        <input className="form-check-input" type="checkbox" id="allDayCheck" defaultChecked="" />
+                        <input className="form-check-input" type="checkbox" id="allDayCheck" defaultChecked="" checked={allDay} />
                     </div>
 
                 </fieldset>
