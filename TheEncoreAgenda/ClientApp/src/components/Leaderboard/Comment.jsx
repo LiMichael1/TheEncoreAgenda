@@ -4,10 +4,10 @@ const Comment = ({ item }) => {
   return (
     <div className='row'>
       <div className='col'>
-        <p>{item.User.Email}</p>
+        <p>{item.user ? item.user.email : 'Anonymous'}</p>
       </div>
       <div className='col-8'>
-        <p>{item.Message}</p>
+        <p>{item.message}</p>
       </div>
     </div>
   );

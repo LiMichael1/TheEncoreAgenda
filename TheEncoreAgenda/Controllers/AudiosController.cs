@@ -13,7 +13,7 @@ using TheEncoreAgenda.Utils;
 namespace TheEncoreAgenda.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("api/audios")]
     [ApiController]
     public class AudiosController : ControllerBase
     {
@@ -65,10 +65,6 @@ namespace TheEncoreAgenda.Controllers
             {
                 return NotFound();
             }
-
-            List<Comment> comments = await _context.Comments.Where(x => x.AudioId == audio.AudioId).Include(x => x.User).ToListAsync();
-
-            audio.Comments = comments;
 
             return Ok(audio);
         }
@@ -160,13 +156,13 @@ namespace TheEncoreAgenda.Controllers
         // POST: api/Audios
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        //[Consumes("multipart/form-data")]
-        //[ProducesResponseType(typeof(Audio), (StatusCodes.Status201Created))]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Consumes("multipart/form-data")]
+        [ProducesResponseType(typeof(Audio), (StatusCodes.Status201Created))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Audio>> PostAudio([FromForm]Audio audio, IFormFile? upload)
         {
-            if (upload == null) return BadRequest();
+            if (upload == null) return BadRequest("File is not there");
 
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
