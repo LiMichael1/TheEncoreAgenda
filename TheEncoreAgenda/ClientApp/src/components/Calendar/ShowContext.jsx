@@ -3,10 +3,11 @@ import { createContext } from 'react';
 
 export const defaultEventInfo = {
     title: "",
-    desc: "",
+    description: "",
     allDay: false,
     start: Date.now(),
-    end: Date.now()
+    end: Date.now(),
+    repeat: 0
     }
 
 const initialState = {
@@ -17,7 +18,9 @@ const initialState = {
     setEventType: () => null,
 
     eventInfo: defaultEventInfo,
-    setEventInfo: () => null
+    setEventInfo: () => null,
+    events: [],
+    setEvents: () => null
 };
 
 export const ShowContext = createContext({ initialState }); 
@@ -28,6 +31,7 @@ export const ShowProvider = ({ children }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [eventType, setEventType] = useState("New");
     const [eventInfo, setEventInfo] = useState(defaultEventInfo);
+    const [events, setEvents] = useState([]);
 
     //console.log(eventInfo);
 
@@ -37,7 +41,9 @@ export const ShowProvider = ({ children }) => {
         eventType,
         setEventType,
         eventInfo,
-        setEventInfo
+        setEventInfo,
+        events,
+        setEvents
     };
 
     

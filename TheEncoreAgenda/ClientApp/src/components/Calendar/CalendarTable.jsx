@@ -1,8 +1,21 @@
 ﻿import CalendarRow from "./CalendarRow";
+import { ShowContext } from "./ShowContext";
+import { useContext, useEffect } from 'react';
 
 export default function CalendarTable({ calendar }) {
     const month = calendar.month;
     const year = calendar.year;
+    const {events, setEvents} = useContext(ShowContext);
+
+    useEffect(() => {
+        const getEvent = async () => {
+            const res = await fetch('/api/CalendarEvents');
+            const data = await res.json();
+            setEvents(data);
+            
+        };
+        getEvent();
+    }, []);
     return (
         <table className="table table-bordered">
             <thead>
@@ -45,3 +58,17 @@ function showCalendarInternal(month, year) {
     return rows;
 }
 
+
+
+//async function getEvents() {
+//    const { events } = useContext(ShowContext);
+
+//    await fetch('/api/CalendarEvents').then((response) => {
+//        return response.json();
+//    })
+//        .then((data) => {
+//            data.map(function () {
+
+//            })
+//        }
+//}

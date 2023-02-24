@@ -9,15 +9,6 @@ export default function CalendarModal() {
     if (!eventInfo) {
         eventInfo = defaultEventInfo;
     }
-
-    console.log(eventInfo);
-    console.log(eventInfo.allDay);
-    console.log(eventInfo.title);
-
-    if (eventType === "New") {
-
-    }
-
     //eventType += " Event";
     const modalRef = useRef(null);
 
@@ -33,6 +24,43 @@ export default function CalendarModal() {
     }, [isOpen]);
 
 
+    if (eventType === "New") {
+       
+    }
+
+    async function saveEvent() {
+        // do all the stuff
+        await fetch('/api/CalendarEvents', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(eventInfo)
+        });
+
+        setIsOpen(false);
+        setEventInfo(defaultEventInfo);
+    }
+
+    function deleteEvent() {
+
+        //await fetch('/api/CalendarEvents', {
+        //    method: 'DELETE',
+            
+        //});
+
+        setIsOpen(false);
+        setEventInfo(defaultEventInfo);
+    }
+
+    function handleChange(event) {
+        if (event.target.name === "allDay") {
+            setEventInfo({ ...eventInfo, [event.target.name]: event.target.checked });
+        }
+        else setEventInfo({ ...eventInfo, [event.target.name]: event.target.value });
+        console.log(eventInfo.description)
+    }
+
     return (
         <div className="modal" ref={modalRef}>
             <div className="modal-dialog" role="document">
@@ -40,7 +68,7 @@ export default function CalendarModal() {
                     {/*header*/}
                     <div className="modal-header">
                         <h5 className="modal-title">{eventType + ` Event`}</h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => setIsOpen(false)}>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => { setIsOpen(false); setEventInfo = defaultEventInfo; }}>
                             <span aria-hidden="true"></span>
                         </button>
                     </div>
@@ -52,14 +80,14 @@ export default function CalendarModal() {
                                     <label htmlFor="titleOfEvent" >Title</label>
                                 </div>
                                 <div className="col-10">
-                                    <input type="text" className="form-control" id="eventTitle" defaultValue={eventInfo.title} required />
+                                    <input type="text" className="form-control" name="title" id="eventTitle" value={eventInfo.title} onChange={handleChange} required />
                                 </div>
 
 
                             </div>
                             <div className="form-group" style={{ width: "100%" }} >
                                 <label htmlFor="eventDescription" className="form-label mt-4">Description</label>
-                                <textarea className="form-control" id="eventDescription" rows="3" defaultValue={eventInfo.desc} />
+                                <textarea className="form-control" name="description" id="eventDescription" rows="3" value={eventInfo.description} onChange={handleChange} />
                             </div>
 
                         </div>
@@ -68,12 +96,12 @@ export default function CalendarModal() {
                             <fieldset className="form-group row" style={{ padding: "12px" }} >
 
                                 <label>Starts</label>
-                                <input type="date" id="eventStart" className="form-control" defaultValue={eventInfo.start} required />
+                                <input type={`${eventInfo.allDay ? 'date' : 'datetime-local'}`} id="eventStart" className="form-control" name="start" value={eventInfo.start} onChange={handleChange} required />
                                 <label>Ends</label>
-                                <input type="date" id="eventEnd" className="form-control" defaultValue={eventInfo.end} required />
+                                <input type={`${eventInfo.allDay ? 'date' : 'datetime-local'}`} id="eventEnd" className="form-control" name="end" value={eventInfo.end} onChange={handleChange} required />
                                 <div className="form-check form-switch">
                                     <label className="form-check-label" htmlFor="allDayCheck">All Day</label>
-                                    <input className="form-check-input" type="checkbox" id="allDayCheck" defaultChecked={eventInfo.allDay} />
+                                    <input className="form-check-input" type="checkbox" id="allDayCheck" name="allDay" checked={eventInfo.allDay} onChange={handleChange} />
                                 </div>
 
                             </fieldset>
@@ -82,8 +110,9 @@ export default function CalendarModal() {
                     </div>
                     {/*footer*/}
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-primary">Save</button>
+                        <button type="submit" className="btn btn-primary" onClick={saveEvent}>Save</button>
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => setIsOpen(false)}>Cancel</button>
+                        <button type="button" id="btnDelete" className="btn btn-warning" onClick={deleteEvent}>Delete</button>
                     </div>
                 </div >
             </div >
