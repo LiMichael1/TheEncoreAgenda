@@ -6,7 +6,7 @@ const AudioPlayer = ({ src = '' }) => {
 
   useEffect(() => {
     const playMusic = () => {
-      if (src !== '') {
+      if (src !== null) {
         playerRef.current.load();
         playerRef.current.play();
       }

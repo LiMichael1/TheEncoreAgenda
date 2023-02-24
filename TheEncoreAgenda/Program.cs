@@ -20,11 +20,12 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddIdentityServer()
-    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
 
 builder.Services.AddAuthentication()
-    .AddIdentityServerJwt();
+                .AddIdentityServerJwt();
+
 
 builder.Services.Configure<JwtBearerOptions>(
     IdentityServerJwtConstants.IdentityServerJwtBearerScheme,
@@ -35,13 +36,18 @@ builder.Services.Configure<JwtBearerOptions>(
 builder.Services.AddCors(options => {
     options.AddDefaultPolicy(
         policy => {
-            policy.WithOrigins("https://localhost:44462");
+            policy.WithOrigins("https://localhost:44462")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
             }
         );
 });
 
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+                .AddJsonOptions(options => {
+                    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+                });
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
