@@ -14,7 +14,7 @@ export default function CalendarCell(props) {
     else className += " dayCol";
     return (
 
-        <td className={className} onClick={e => { setIsOpen(true) }}>
+        <td className={className} id={`td` + date} onClick={e => { setIsOpen(true) }}>
             {date}
 
         {/*    {list && !className.includes('calDisabled') ? list.map((event, index) => <CalendarEvent key={index} event={event} />) : ""}*/}

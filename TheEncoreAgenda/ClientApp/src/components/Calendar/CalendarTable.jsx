@@ -1,23 +1,53 @@
 ﻿import CalendarRow from "./CalendarRow";
+import React from 'react';
 import { ShowContext } from "./ShowContext";
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useRef } from 'react';
+import { fixDate, getCurrentMonth } from './CalendarFunctions';
+import CalendarEvent from "./CalendarEvent";
 
 export default function CalendarTable({ calendar }) {
     const month = calendar.month;
     const year = calendar.year;
     const {events, setEvents} = useContext(ShowContext);
+    const tableRef = useRef();
 
     useEffect(() => {
         const getEvent = async () => {
-            const res = await fetch('/api/CalendarEvents');
-            const data = await res.json();
-            setEvents(data);
-            
+            await fetch('/api/CalendarEvents').then(res => res.json())
+                .then(data => {
+                    
+                    data.map(function (event) {
+                        showEvent(event);
+                    });
+                })
         };
         getEvent();
     }, []);
+
+    const showEvent = (e) => {
+        const table = tableRef.current;
+        const startDate = new Date(fixDate(e.start.substring(0, 10)));
+        const endDate = new Date(fixDate(e.end.substring(0, 10)));
+
+        //if (startDate.getMonth() !== getCurrentMonth()) return;
+
+        for (let i = startDate.getDate(); i <= endDate.getDate(); i++) {
+            let t = table.querySelector("#td" + i);
+            if (t.childElementCount == 3) continue;
+
+            const calEvent = <CalendarEvent event={e} />;
+            console.log(calEvent);
+
+            const x = document.createElement("p");
+            x.innerHTML = "something";
+
+            t.append(calEvent);
+
+        }
+    }
+
     return (
-        <table className="table table-bordered">
+        <table ref={tableRef} className="table table-bordered">
             <thead>
                 <tr>
                     <th className="weekCol">Sun</th>
@@ -56,6 +86,10 @@ function showCalendarInternal(month, year) {
         //date = 
     }
     return rows;
+}
+
+const checkDate = () => {
+
 }
 
 
