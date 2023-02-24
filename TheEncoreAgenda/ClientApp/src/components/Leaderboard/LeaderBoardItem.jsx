@@ -1,18 +1,46 @@
-﻿import React from 'react';
+﻿import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import authService from '../api-authorization/AuthorizeService';
 
-const LeaderBoardItem = ({ item, playMusic }) => {
-  const likeClick = (event) => {};
+const LeaderBoardItem = ({ item, playMusic, liked }) => {
+    const [likes, setLikes] = useState(item.numberOfLikes);
+    const [like, setLike] = useState(liked);
+
+    const likeClick = async() => {
+        const audioId = item.audioId;
+    
+        const token = await authService.getAccessToken();
+
+        try {
+            const res = await fetch('/api/audios/upvote/' + audioId, {
+                method: 'post',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            const data = await res.text();
+
+            setLikes(parseInt(data));
+            setLike(!like);
+        } catch(ex) {
+            console.log(ex);
+        }
+    };
+
+    
+
 
   return (
     <div className='row board-card'>
       <div className='col-3'>
         {/* Votes Here*/}
-        <div className='score'>
-          <button className='like-btn' onClick={likeClick}>
+        <div className={`score ${like? 'liked': ''}`}>
+          <button className='like-btn' onClick={() => likeClick()}>
             <i className='bi bi-chevron-up'></i>
           </button>
-          <h3 className='voteCount'>{item.numberOfLikes}</h3>
+            <h3 className='voteCount'>{likes}</h3>
         </div>
       </div>
       <div className='col-3'>
@@ -29,7 +57,7 @@ const LeaderBoardItem = ({ item, playMusic }) => {
       <div className='col-4 mt-3'>
         {/* Information Here */}
         <p>
-          <span className='userText'>{item.user.email}</span>
+          <span className='userText'>{item.user ? item.user.email : 'Email Here'}</span>
         </p>
         <p>
           <span className='neonText'>{item.song}</span>

@@ -36,6 +36,22 @@ namespace TheEncoreAgenda.Controllers
             return await _context.Comments.ToListAsync();
         }
 
+        // GET: api/Comments/audio/{id}
+        [HttpGet("audio/{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(List<Comment>), (StatusCodes.Status200OK))]
+
+        public async Task<ActionResult<IEnumerable<Comment>>> GetCommentsByAudioId(int id)
+        {
+            if (_context.Comments == null)
+            {
+                return NotFound();
+            }
+
+            return await _context.Comments.Where(x => x.AudioId == id).ToListAsync();
+        }
+
         // GET: api/Comments/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
