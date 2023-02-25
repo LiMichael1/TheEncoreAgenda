@@ -8,43 +8,44 @@ import CalendarEvent from "./CalendarEvent";
 export default function CalendarTable({ calendar }) {
     const month = calendar.month;
     const year = calendar.year;
-    const {events, setEvents} = useContext(ShowContext);
+    const { events, setEvents } = useContext(ShowContext);
     const tableRef = useRef();
 
     useEffect(() => {
-        const getEvent = async () => {
-            await fetch('/api/CalendarEvents').then(res => res.json())
-                .then(data => {
-                    
-                    data.map(function (event) {
-                        showEvent(event);
-                    });
-                })
-        };
-        getEvent();
+        const getEvents = async () => {
+            const res = await fetch('/api/CalendarEvents');
+            const data = await res.json();
+
+            setEvents(data);
+            
+        }
+        getEvents();
     }, []);
 
-    const showEvent = (e) => {
-        const table = tableRef.current;
-        const startDate = new Date(fixDate(e.start.substring(0, 10)));
-        const endDate = new Date(fixDate(e.end.substring(0, 10)));
+    
 
-        //if (startDate.getMonth() !== getCurrentMonth()) return;
 
-        for (let i = startDate.getDate(); i <= endDate.getDate(); i++) {
-            let t = table.querySelector("#td" + i);
-            if (t.childElementCount == 3) continue;
+    //const showEvent = (e) => {
+    //    const table = tableRef.current;
+    //    const startDate = new Date(fixDate(e.start.substring(0, 10)));
+    //    const endDate = new Date(fixDate(e.end.substring(0, 10)));
 
-            const calEvent = <CalendarEvent event={e} />;
-            console.log(calEvent);
+    //    //if (startDate.getMonth() !== getCurrentMonth()) return;
 
-            const x = document.createElement("p");
-            x.innerHTML = "something";
+    //    for (let i = startDate.getDate(); i <= endDate.getDate(); i++) {
+    //        let t = table.querySelector("#td" + i);
+    //        if (t.childElementCount == 3) continue;
 
-            t.append(calEvent);
+    //        const calEvent = <CalendarEvent event={e} />;
+    //        console.log(calEvent);
 
-        }
-    }
+    //        const x = document.createElement("p");
+    //        x.innerHTML = "something";
+
+    //        t.append(calEvent);
+
+    //    }
+    //}
 
     return (
         <table ref={tableRef} className="table table-bordered">

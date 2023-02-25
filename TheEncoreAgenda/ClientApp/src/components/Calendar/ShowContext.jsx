@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { createContext } from 'react';
 
 export const defaultEventInfo = {
@@ -20,7 +20,9 @@ const initialState = {
     eventInfo: defaultEventInfo,
     setEventInfo: () => null,
     events: [],
-    setEvents: () => null
+    setEvents: () => null,
+    matchEvents: {},
+    setMatchEvents: () => null,
 };
 
 export const ShowContext = createContext({ initialState }); 
@@ -34,7 +36,26 @@ export const ShowProvider = ({ children }) => {
     const [events, setEvents] = useState([]);
     const [matchEvents, setMatchEvents] = useState({});
 
-    //console.log(eventInfo);
+    useEffect(() => {
+        const eventMatch = {};
+
+        for (let i = 0; i < events.length; i++) {
+            const date = new Date(events[i].start);
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            const year = date.getFullYear();
+
+            const key = month + '-' + day + '-' + year;
+
+            if (!eventMatch[key]) {
+                eventMatch[key] = [events[i]];
+            } else {
+                eventMatch[key].push(events[i]);
+            }
+        }
+
+        setMatchEvents(eventMatch);
+    }, [events.length]);
 
     const value = {
         isOpen,

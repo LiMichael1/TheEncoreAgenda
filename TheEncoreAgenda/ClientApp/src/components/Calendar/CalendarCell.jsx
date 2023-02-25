@@ -1,21 +1,37 @@
 ﻿import { useContext } from 'react';
 import CalendarEvent from './CalendarEvent';
-import { ShowContext } from './ShowContext';
+import { ShowContext, defaultEventInfo } from './ShowContext';
 
 export default function CalendarCell(props) {
-    let { date, className } = props;
-    const { setIsOpen, events } = useContext(ShowContext);
-    let list = [];
-    //list = events.filter(x => checkDate(x.start, x.end, date));
+    let { date, month, year, className } = props;
+    const { setIsOpen, setEventType, setEventInfo ,events, matchEvents } = useContext(ShowContext);
+
+    const key = month + '-' + date + '-' + year;
     
     if (className !== null) {
         className += " dayCol";
     }
     else className += " dayCol";
+
+    const handleClick = (e) => {
+        if (!matchEvents[key]) {
+            setIsOpen(true);
+            setEventType('New');
+            const day = new Date(year, month, date);
+            // ????????????????????????????????????????????????????
+            setEventInfo({ ...defaultEventInfo, start: day, end: day });
+        }
+        
+    }
+
     return (
 
-        <td className={className} id={`td` + date} onClick={e => { setIsOpen(true) }}>
+        <td className={className} id={`td` + date} onClick={handleClick}>
             {date}
+
+            {!className.includes('calDisabled') && matchEvents[key] ? matchEvents[key].map((event, index) => {
+                return <CalendarEvent key={index} event={event} />
+            }) : ''}
 
         {/*    {list && !className.includes('calDisabled') ? list.map((event, index) => <CalendarEvent key={index} event={event} />) : ""}*/}
         </td>
