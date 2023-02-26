@@ -5,7 +5,7 @@ import ModalHeader from "./ModalHeader";
 import { defaultEventInfo, ShowContext } from './ShowContext';
 
 export default function CalendarModal() {
-    let { isOpen, setIsOpen, eventType, eventInfo, setEventInfo } = useContext(ShowContext);
+    let { isOpen, setIsOpen, eventType, eventInfo, setEventInfo, setEvents, events } = useContext(ShowContext);
     if (!eventInfo) {
         eventInfo = defaultEventInfo;
     }
@@ -38,6 +38,7 @@ export default function CalendarModal() {
             body: JSON.stringify(eventInfo)
         });
 
+        setEvents([...events, eventInfo ]);
         setIsOpen(false);
         setEventInfo(defaultEventInfo);
 

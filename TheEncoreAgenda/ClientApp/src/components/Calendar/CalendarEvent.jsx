@@ -1,16 +1,18 @@
 ﻿import { useContext } from 'react';
 import { ShowContext, defaultEventInfo } from './ShowContext';
 
-const CalendarEvent = ({ event: {title, description, start, end, allDay } = defaultEventInfo }) => {
-    console.log("calendar event component");
-    const { setIsOpen, setEventType } = useContext(ShowContext);
+const CalendarEvent = ({ event = defaultEventInfo }) => {
+    const { title, description, start, end, allDay } = event;
+    const { setIsOpen, setEventType, setEventInfo } = useContext(ShowContext);
     function editEvent() {
         setIsOpen(true);
         setEventType("Edit");
+        setEventInfo(event);
     }
+
     return (
-        <div>
-            {title} 
+        <div onClick={() => editEvent()} className='calendar-event' >
+            {title !== '' ? title : 'Empty Title'} 
         </div>
     );
 }

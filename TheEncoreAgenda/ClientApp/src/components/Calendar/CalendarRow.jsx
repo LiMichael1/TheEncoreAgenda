@@ -6,7 +6,7 @@ export default function CalendarRow(props) {
     let date = 1;
     const daysInPrevMonth = getPrevMonth(month, year);
 
-    const row = [];
+    const data = [];
     let today = new Date();
 
     for (let i = 0; i < 7; i++) {
@@ -20,45 +20,66 @@ export default function CalendarRow(props) {
         }
         if (rowNum === 0 && i < firstDay) {
             classes += 'calDisabled ';
-            row.push(<CalendarCell
-                key={i}
-                date={i - (firstDay - 1) + daysInPrevMonth}
-                className={classes}
-                
-            />);
+
+            data.push({
+                date: i - (firstDay - 1) + daysInPrevMonth,
+                month: month + 1,
+                className: classes,
+                year: year,
+            });
         }
         else if (date > daysInMonth) {
             classes += 'calDisabled ';
-            row.push(<CalendarCell
-                key={i}
-                date={date - daysInMonth}
-                className={classes}
-                
-            />);
+
+            data.push({
+                date: date - daysInMonth,
+                month: month + 1,
+                className: classes,
+                year: year,
+            });
+
             date++;
         }
         else {
             if (today.getDate() === date && today.getFullYear() === year && today.getMonth() === month) {
                 classes += 'dateToday ';
-                row.push(<CalendarCell
-                    key={i}
-                    date={date}
-                    className={classes}
-                    
-                />);
+
+
+                data.push({
+                    date: date,
+                    month: month + 1,
+                    className: classes,
+                    year: year,
+                });
             }
-            else row.push(<CalendarCell
-                key={i}
-                date={date}
-                className={classes}
-                
-            />);
+            else {
+
+
+                data.push({
+                    date: date,
+                    month: month + 1,
+                    className: classes,
+                    year: year,
+                });
+            };
             date++;
         }
     }
-    if (rowNum === 0) return <tr className='calRow colTop'>{row}</tr>;
-    else if (rowNum === 5) return <tr className='calRow colBottom'>{row}</tr>;
-    else return <tr className='calRow'>{row}</tr>;
+
+    let rowClasses = 'calRow ';
+    if (rowNum === 0) rowClasses += 'colTop ';
+    else if (rowNum === 5) rowClasses += 'colBottom ';
+
+
+    return (
+        <tr className={rowClasses}>
+        {
+                data.map(({ className, date, month, year }, index) =>
+                    <CalendarCell key={index} className={className} date={date} month={month} year={year} />)
+        }
+        </tr>
+    );
+    
 }
 
 function getPrevMonth(month, year) {
