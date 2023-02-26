@@ -11,7 +11,7 @@ const CalendarEvent = ({ event = defaultEventInfo }) => {
     }
 
     return (
-        <div onClick={() => editEvent()} style={{ backgroundColor: 'red', borderBottom: '1px solid black' } }>
+        <div onClick={() => editEvent()} className='calendar-event' >
             {title !== '' ? title : 'Empty Title'} 
         </div>
     );
