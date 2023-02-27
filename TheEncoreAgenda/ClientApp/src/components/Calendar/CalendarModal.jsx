@@ -124,8 +124,9 @@ export default function CalendarModal() {
 const fixDateModal = (date, allDay) => {
     let newFormat = new Date(date);
     let month = newFormat.getMonth() < 10 ? "0" + newFormat.getMonth() : newFormat.getMonth();
-    let day = newFormat.getDate < 10 ? "0" + newFormat.getDate() : newFormat.getDate();
+    let day = newFormat.getDate() < 10 ? "0" + newFormat.getDate() : newFormat.getDate();
     let outputDate = newFormat.getFullYear() + "-" + month + "-" + day;
+    console.log(outputDate);
     
     return allDay ? outputDate : outputDate + "T" + newFormat.toTimeString().substring(0,5);
 }
