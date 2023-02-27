@@ -9,6 +9,8 @@ import Spinner from '../global/Spinner/Spinner.component';
 import { boardData } from '../../utils/sampleData';
 import authService from '../api-authorization/AuthorizeService';
 import axios from 'axios';
+import { isExpired } from 'react-jwt'
+import Cookies from 'js-cookie';
 
 const LeaderBoard = ({ id = 0 }) => {
     const [items, setItems] = useState([]);
@@ -31,6 +33,13 @@ const LeaderBoard = ({ id = 0 }) => {
         const getVotes = async () => {
             if (await authService.isAuthenticated()) {
                 const token = await authService.getAccessToken();
+
+                // log out after jwt expired
+                if (isExpired(token)) {
+                    
+                }
+
+
 
                 let res;
 
