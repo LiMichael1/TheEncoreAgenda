@@ -32,11 +32,18 @@ const LeaderBoard = ({ id = 0 }) => {
             if (await authService.isAuthenticated()) {
                 const token = await authService.getAccessToken();
 
-                const res = await axios.get('/api/votes/uservotes', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    },
-                });
+                let res;
+
+                try {
+                    res = await axios.get('/api/votes/uservotes', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                        },
+                    });
+                } catch (ex) {
+                    alert(ex);
+                }
+                
 
                 const data = res.data;
 
@@ -96,7 +103,7 @@ const LeaderBoard = ({ id = 0 }) => {
                 <Spinner />
             )}
 
-            <Modal title='Create New' show={modalVisible} setShow={setModalVisible}>
+            <Modal title='Upload Rendition' show={modalVisible} setShow={setModalVisible}>
                 <AudioForm addItem={addItem} leaderboardId={id} />
             </Modal>
         </div>

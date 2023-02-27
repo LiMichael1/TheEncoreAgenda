@@ -8,7 +8,7 @@ const defaultState = {
     artist: '',
 };
 
-const AudioForm = ({ data = defaultState, file = null, addItem = () => { }, leaderboardId = 0 }) => {
+const AudioForm = ({ data = defaultState, file = null, addItem = () => { }, leaderboardId = 0, page='leaderboard' }) => {
     const [audio, setAudio] = useState(defaultState);
     const fileInputRef = useRef();
     const navigate = useNavigate();
@@ -108,7 +108,10 @@ const AudioForm = ({ data = defaultState, file = null, addItem = () => { }, lead
             </div>
 
             <div className='mt-3 text-center'>
-                <Link to='/leaderboard/create'>Create Your Own</Link>
+                {page !== 'create' ?
+                    <Link to={`/leaderboard/${leaderboardId}/Create`} className='mt-3 text-create'>Create your own</Link> :
+                    <Link to={`/leaderboard/${leaderboardId}`} className='backBtn'>LeaderBoard</Link>
+                }
             </div>
         </form>
     );

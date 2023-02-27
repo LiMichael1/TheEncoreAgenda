@@ -31,6 +31,7 @@ const AppRoutes = [
   //  },
   {
       path: '/Leaderboard/:id/Create',
+      requireAuth: true,
       element: <LeaderBoardCreate />,
   },
   {
