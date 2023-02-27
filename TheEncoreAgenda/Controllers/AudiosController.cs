@@ -58,6 +58,39 @@ namespace TheEncoreAgenda.Controllers
 
         }
 
+        // Get: api/Audios/LeaderBoard/{id}
+        [AllowAnonymous]
+        [HttpGet("leaderboard/{id}")]
+        [ProducesResponseType(typeof(List<AudioDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<AudioDTO>>> GetLeaderBoardAudios(int id)
+        {
+            if (_context.Audios == null)
+            {
+                return NotFound();
+            }
+
+            // Need to Adjust For More Efficient Query
+            List<AudioDTO> audios = await _context.Audios
+                                        .Where(x => x.CalendarEventId == id)
+                                        .Select(x => new AudioDTO
+                                        {
+                                            AudioId = x.AudioId,
+                                            UserId = x.UserId,
+                                            Song = x.Song,
+                                            OriginalArtist = x.OriginalArtist,
+                                            SubmittedOn = x.SubmittedOn,
+                                            AudioPath = x.AudioPath,
+                                            NumberOfLikes = x.NumberOfLikes,
+                                            UserName = x.User.Email,
+                                        })
+                                        .ToListAsync();
+            return Ok(audios);
+
+        }
+
+
+
         // GET: api/Audios/5
         [AllowAnonymous]
         [HttpGet("{id}")]
@@ -81,7 +114,7 @@ namespace TheEncoreAgenda.Controllers
                                                SubmittedOn = x.SubmittedOn,
                                                AudioPath = x.AudioPath,
                                                NumberOfLikes = x.NumberOfLikes,
-                                               UserName = x.User?.Email,
+                                               UserName = x.User.Email,
                                            })
                                            .SingleOrDefaultAsync();
                                       

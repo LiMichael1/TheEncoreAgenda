@@ -212,7 +212,7 @@ function toggleTime() {
 //});
 
 
-function fixDate(date) {
+export function fixDate(date) {
     return date.replace(/-/g, "/");
 }
 
@@ -259,7 +259,6 @@ async function getEvents() {
     })
         .then((data) => {
             //let events = data;
-
             data.map(function (eventVar) {
                 let e = new CalEvent(eventVar.title, eventVar.description, eventVar.start, eventVar.end, eventVar.allDay, eventVar.repeat);
                 showEvent(e);

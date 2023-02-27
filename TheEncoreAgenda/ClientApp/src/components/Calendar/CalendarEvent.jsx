@@ -1,14 +1,31 @@
-﻿import { ShowContext } from './ShowContext';
-import { useContext } from 'react';
+﻿import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ShowContext, defaultEventInfo } from './ShowContext';
+import useSingleAndDoubleClick from '../global/useSingleAndDoubleClick';
 
-export default CalendarEvent();
+const CalendarEvent = ({ event = defaultEventInfo }) => {
+    const { id, title, description, start, end, allDay } = event;
+    const { setIsOpen, setEventType, setEventInfo } = useContext(ShowContext);
+    const navigate = useNavigate();
 
-function CalendarEvent() {
-    const { setIsOpen, setEventType } = useContext(ShowContext);
-    function editEvent() {
+    const editEvent = () => {
         setIsOpen(true);
         setEventType("Edit");
+        setEventInfo(event);
     }
-    return <div onClick={() => editEvent()}>{eventTitle}</div>;
+
+    const goToEvent = () => {
+        navigate('/leaderboard/' + id);
+    }
+
+    const handleClick = useSingleAndDoubleClick(goToEvent, editEvent);
+
+    return (
+        <div onClick={handleClick} className='calendar-event' >
+            {title !== '' ? title : 'Empty Title'} 
+        </div>
+    );
 }
+
+export default CalendarEvent;
 

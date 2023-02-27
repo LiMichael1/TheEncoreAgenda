@@ -22,8 +22,16 @@ const AppRoutes = [
     element: <LeaderBoardPage />,
   },
   {
-    path: '/Leaderboard/Create',
-    element: <LeaderBoardCreate />,
+      path: '/Leaderboard/:id',
+      element: <LeaderBoardPage />
+  },
+  //{
+  //  path: '/Leaderboard/Create',
+  //  element: <LeaderBoardCreate />,
+  //  },
+  {
+      path: '/Leaderboard/:id/Create',
+      element: <LeaderBoardCreate />,
   },
   {
     path: '/Leaderboard/Details/:id',
