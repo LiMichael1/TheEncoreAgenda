@@ -53,6 +53,7 @@ namespace TheEncoreAgenda.Controllers
                                             NumberOfLikes = x.NumberOfLikes,
                                             UserName = x.User.Email,
                                         })
+                                        .OrderByDescending(x => x.NumberOfLikes)
                                         .ToListAsync();
             return Ok(audios);
 
@@ -84,6 +85,7 @@ namespace TheEncoreAgenda.Controllers
                                             NumberOfLikes = x.NumberOfLikes,
                                             UserName = x.User.Email,
                                         })
+                                        .OrderByDescending(x => x.NumberOfLikes)
                                         .ToListAsync();
             return Ok(audios);
 
