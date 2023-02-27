@@ -47,6 +47,10 @@
   transition: background-color 0.3s ease-out;
 }
 
+.board-card:hover {
+    background-color: purple;
+}
+
 /* Buttons */
 
 .glow-button {
