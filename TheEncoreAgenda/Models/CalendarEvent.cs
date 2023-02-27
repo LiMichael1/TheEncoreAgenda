@@ -22,7 +22,7 @@ namespace TheEncoreAgenda.Models
         public string? Description { get; set; } = String.Empty;
         public Repeat RepeatNum { get; set; } = Repeat.None;
         
-
+        public List<Audio>? Audios { get; set; }
         public List<ApplicationUser>? Users { get; set; }
     }
 }

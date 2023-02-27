@@ -12,7 +12,9 @@ const Recorder = ({ setFile }) => {
   });
 
   useEffect(() => {
-    console.log(stream, recorder);
+      if (stream !== null || recorder !== null) {
+          console.log(stream, recorder);
+      } 
   }, [stream, recorder]);
 
   const handleCaptureBtnClick = async (event) => {
@@ -146,7 +148,7 @@ const mergeAudioStreams = (desktopStream, voiceStream) => {
   if (voiceStream && voiceStream.getAudioTracks().length > 0) {
     const source2 = context.createMediaStreamSource(voiceStream);
     const voiceGain = context.createGain();
-    voiceGain.gain.value = 0.7;
+    voiceGain.gain.value = 0.9;
     source2.connect(voiceGain).connect(destination);
     hasVoice = true;
   }

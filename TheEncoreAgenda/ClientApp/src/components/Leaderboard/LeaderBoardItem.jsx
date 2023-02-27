@@ -1,11 +1,15 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import authService from '../api-authorization/AuthorizeService';
 
-const LeaderBoardItem = ({ item, playMusic, liked }) => {
+const LeaderBoardItem = ({ item, playMusic, liked = false }) => {
     const [likes, setLikes] = useState(item.numberOfLikes);
     const [like, setLike] = useState(liked);
+
+    useEffect(() => {
+        setLike(liked);
+    }, [liked])
 
     const likeClick = async() => {
         const audioId = item.audioId;

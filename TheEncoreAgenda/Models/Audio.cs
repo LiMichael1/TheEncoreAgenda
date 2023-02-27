@@ -8,11 +8,18 @@ namespace TheEncoreAgenda.Models
     {
         [Key]
         public int AudioId { get; set; }
+
         [ForeignKey("ApplicationUser")]
         public string? UserId { get; set; }
+
+        [ForeignKey("CalendarEvent")] // LeaderBoard
+        public int? CalendarEventId { get; set; }
+
         public string Song { get; set; } = String.Empty;
+
         [DisplayName("Artist")]
         public string OriginalArtist { get; set; } = String.Empty;
+
         [DisplayName("Submission Date")]
         public DateTime SubmittedOn { get; set; } = DateTime.Now;
 
@@ -25,6 +32,7 @@ namespace TheEncoreAgenda.Models
         public int Vote { get { return NumberOfLikes - NumberOfDislikes; } }
 
         public ApplicationUser? User { get; set; }
+        public CalendarEvent? CalendarEvent { get; set; }
 
         public List<Vote>? Votes { get; set; }
         public List<Comment>? Comments { get; set; }

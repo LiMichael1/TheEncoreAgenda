@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TheEncoreAgenda.Data;
 
@@ -11,9 +12,11 @@ using TheEncoreAgenda.Data;
 namespace TheEncoreAgenda.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230227000005_add-leaderboard")]
+    partial class addleaderboard
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -392,7 +395,7 @@ namespace TheEncoreAgenda.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CalendarEventId")
+                    b.Property<int>("CalendarEventId")
                         .HasColumnType("int");
 
                     b.Property<int>("NumberOfDislikes")
@@ -582,7 +585,9 @@ namespace TheEncoreAgenda.Data.Migrations
                 {
                     b.HasOne("TheEncoreAgenda.Models.CalendarEvent", "CalendarEvent")
                         .WithMany("Audios")
-                        .HasForeignKey("CalendarEventId");
+                        .HasForeignKey("CalendarEventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TheEncoreAgenda.Models.ApplicationUser", "User")
                         .WithMany("Audios")
