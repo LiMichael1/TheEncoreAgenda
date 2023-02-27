@@ -95,10 +95,10 @@ export default function CalendarModal() {
 
                                 <label>Starts</label>
 
-                                <input type={`${eventInfo.allDay ? 'date' : 'datetime-local'}`} id="eventStart" className="form-control" name="start" value={fixDateModal(eventInfo.start, eventInfo.allDay)} onChange={handleChange} required />
+                                <input type={`${eventInfo.allDay ? 'date' : 'datetime-local'}`} id="eventStart" className="form-control" name="start" value={eventInfo.start} onChange={handleChange} required />
                                 
                                 <label>Ends</label>
-                                <input type={`${eventInfo.allDay ? 'date' : 'datetime-local'}`} id="eventEnd" className="form-control" name="end" value={fixDateModal(eventInfo.end, eventInfo.allDay)} onChange={handleChange} required />
+                                <input type={`${eventInfo.allDay ? 'date' : 'datetime-local'}`} id="eventEnd" className="form-control" name="end" value={eventInfo.end} onChange={handleChange} required />
                                 
                                 <div className="form-check form-switch">
                                     <label className="form-check-label" htmlFor="allDayCheck">All Day</label>
@@ -111,7 +111,7 @@ export default function CalendarModal() {
                     </div>
                     {/*footer*/}
                     <div className="modal-footer">
-                        <button type="submit" className="btn btn-primary" onClick={saveEvent}>Save</button>
+                        <button type="submit" className="btn btn-primary" onClick={() => saveEvent()}>Save</button>
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => setIsOpen(false)}>Cancel</button>
                         <button type="button" id="btnDelete" className="btn btn-warning" onClick={deleteEvent}>Delete</button>
                     </div>
@@ -123,10 +123,8 @@ export default function CalendarModal() {
 
 const fixDateModal = (date, allDay) => {
     let newFormat = new Date(date);
-    let month = newFormat.getMonth() < 10 ? "0" + newFormat.getMonth() : newFormat.getMonth();
+    let month = newFormat.getMonth() < 9 ? "0" + parseInt(newFormat.getMonth()) : parseInt(newFormat.getMonth());
     let day = newFormat.getDate() < 10 ? "0" + newFormat.getDate() : newFormat.getDate();
-    let outputDate = newFormat.getFullYear() + "-" + month + "-" + day;
-    console.log(outputDate);
-    
+    let outputDate = newFormat.getFullYear() + "-" + month + "-" + day;    
     return allDay ? outputDate : outputDate + "T" + newFormat.toTimeString().substring(0,5);
 }
