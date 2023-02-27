@@ -25,7 +25,7 @@ const LeaderBoard = ({ id = 0 }) => {
             setItems(data);
         };
         fetchBoardData();
-    }, []);
+    }, [id]);
 
     useEffect(() => {
         const getVotes = async () => {
