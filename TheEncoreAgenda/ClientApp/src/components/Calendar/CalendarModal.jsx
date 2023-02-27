@@ -98,7 +98,7 @@ export default function CalendarModal() {
                                 <input type={`${eventInfo.allDay ? 'date' : 'datetime-local'}`} id="eventStart" className="form-control" name="start" value={fixDateModal(eventInfo.start, eventInfo.allDay)} onChange={handleChange} required />
                                 
                                 <label>Ends</label>
-                                <input type={`${eventInfo.allDay ? 'date' : 'datetime-local'}`} id="eventEnd" className="form-control" name="end" value={fixDateModal(eventInfo.start, eventInfo.allDay)} onChange={handleChange} required />
+                                <input type={`${eventInfo.allDay ? 'date' : 'datetime-local'}`} id="eventEnd" className="form-control" name="end" value={fixDateModal(eventInfo.end, eventInfo.allDay)} onChange={handleChange} required />
                                 
                                 <div className="form-check form-switch">
                                     <label className="form-check-label" htmlFor="allDayCheck">All Day</label>
