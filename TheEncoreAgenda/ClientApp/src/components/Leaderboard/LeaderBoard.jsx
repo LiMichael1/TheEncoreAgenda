@@ -1,5 +1,6 @@
 import './leaderboard.styles.css';
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import LeaderBoardItem from './LeaderBoardItem';
 import Modal from '../global/Modal/Modal';
 import AudioPlayer from './AudioPlayer';
@@ -9,21 +10,22 @@ import { boardData } from '../../utils/sampleData';
 import authService from '../api-authorization/AuthorizeService';
 import axios from 'axios';
 
-const LeaderBoard = () => {
+const LeaderBoard = ({ id = 0 }) => {
     const [items, setItems] = useState([]);
     const [music, setMusic] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const [votes, setVotes] = useState([]);
+    const [matchVotes, setMatchVotes] = useState({});
 
     useEffect(() => {
         const fetchBoardData = async () => {
-            const res = await fetch('/api/audios');
+            const res = id === 0 ? await fetch('/api/audios') : await fetch('/api/audios/leaderboard/' + id)
             const data = await res.json();
 
             setItems(data);
         };
         fetchBoardData();
-    }, []);
+    }, [id]);
 
     useEffect(() => {
         const getVotes = async () => {
@@ -39,6 +41,13 @@ const LeaderBoard = () => {
                 const data = res.data;
 
                 setVotes(data);
+
+                const match = {};
+
+                for (let i = 0; i < data.length; i++) {
+                    match[data[i].audioId] = data[i].voteType;
+                }
+                setMatchVotes(match);
             }
         }
         getVotes();
@@ -76,9 +85,10 @@ const LeaderBoard = () => {
             {items.length > 0 ? (
                 items.map((item, index) => {
                     let liked = false;
-                    if (votes.find(x => x.audioId === item.audioId && x.voteType === 1)) {
+                    if (matchVotes[item.audioId] && matchVotes[item.audioId] === 1) {
                         liked = true;
                     }
+
                     return <LeaderBoardItem key={index} item={item} playMusic={playMusic} liked={liked} />
 
                 })
@@ -87,7 +97,7 @@ const LeaderBoard = () => {
             )}
 
             <Modal title='Create New' show={modalVisible} setShow={setModalVisible}>
-                <AudioForm addItem={addItem} />
+                <AudioForm addItem={addItem} leaderboardId={id} />
             </Modal>
         </div>
     );

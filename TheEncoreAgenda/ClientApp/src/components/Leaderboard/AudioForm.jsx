@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import authService from '../api-authorization/AuthorizeService';
 import axios from 'axios';
 
@@ -8,12 +8,14 @@ const defaultState = {
     artist: '',
 };
 
-const AudioForm = ({ data = defaultState, file = null, addItem = () => { } }) => {
+const AudioForm = ({ data = defaultState, file = null, addItem = () => { }, leaderboardId = 0 }) => {
     const [audio, setAudio] = useState(defaultState);
     const fileInputRef = useRef();
+    const navigate = useNavigate();
 
     useEffect(() => {
         setAudio(data);
+    //    console.log('Event: #' + leaderboardId);
     }, [data]);
 
     useEffect(() => {
@@ -44,6 +46,7 @@ const AudioForm = ({ data = defaultState, file = null, addItem = () => { } }) =>
 
         const formData = new FormData();
 
+        if (leaderboardId !== 0) formData.append('audio[CalendarEventId]', leaderboardId);
         formData.append('audio[Song]', audio.song);
         formData.append('audio[OriginalArtist]', audio.artist);
 
@@ -59,6 +62,8 @@ const AudioForm = ({ data = defaultState, file = null, addItem = () => { } }) =>
 
             const data = res.data;
             addItem(data);
+
+            if (res.status === 201 && leaderboardId !== 0) navigate('/leaderboard/' + leaderboardId);
         } catch (ex) {
             console.log(ex);
             alert(ex);
