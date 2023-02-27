@@ -15,11 +15,14 @@ const LeaderBoardCreate = () => {
   const [formData, setFormData] = useState(defaultState);
 
   return (
-      <div className='d-flex align-items-center'>
-          <AudioForm file={file} data={formData} leaderboardId={id} />
-      <div>
-        <Recorder setFile={setFile} />
-        <KaraokeVideo setFormData={setFormData} />
+    <div className='d-flex justify-content-between'>
+      <div className='col-4'>
+        <AudioForm file={file} data={formData} leaderboardId={id} page={'create'} />
+      </div>
+      <div className='col-7 d-flex flex-column'>
+          <Recorder setFile={setFile} />
+          <KaraokeVideo setFormData={setFormData} />
+        
       </div>
     </div>
   );
