@@ -1,7 +1,5 @@
 ﻿import { useEffect, useRef, useContext } from "react";
-import ModalBody from "./ModalBody";
-import ModalFooter from "./ModalFooter";
-import ModalHeader from "./ModalHeader";
+import { fixDate } from "./CalendarFunctions";
 import { defaultEventInfo, ShowContext } from './ShowContext';
 
 export default function CalendarModal() {
@@ -97,9 +95,12 @@ export default function CalendarModal() {
                             <fieldset className="form-group row" style={{ padding: "12px" }} >
 
                                 <label>Starts</label>
-                                <input type={`${eventInfo.allDay ? 'date' : 'datetime-local'}`} id="eventStart" className="form-control" name="start" value={eventInfo.start} onChange={handleChange} required />
+
+                                <input type={`${eventInfo.allDay ? 'date' : 'datetime-local'}`} id="eventStart" className="form-control" name="start" value={fixDateModal(eventInfo.start, eventInfo.allDay)} onChange={handleChange} required />
+                                {/*<input type={`${eventInfo.allDay ? 'date' : 'datetime-local'}`} id="eventStart" className="form-control" name="start" value={`${eventInfo.allDay ? eventInfo.start.substring(0, 10) : eventInfo.start.substring(0, 11) + "00:00"}`} onChange={handleChange} required />*/}
                                 <label>Ends</label>
-                                <input type={`${eventInfo.allDay ? 'date' : 'datetime-local'}`} id="eventEnd" className="form-control" name="end" value={eventInfo.end} onChange={handleChange} required />
+                                <input type={`${eventInfo.allDay ? 'date' : 'datetime-local'}`} id="eventEnd" className="form-control" name="end" value={fixDateModal(eventInfo.start, eventInfo.allDay)} onChange={handleChange} required />
+                                {/*<input type={`${eventInfo.allDay ? 'date' : 'datetime-local'}`} id="eventEnd" className="form-control" name="end" value={`${eventInfo.allDay ? eventInfo.end.substring(0, 10) : eventInfo.end.substring(0, 11) + "23:59"}`} onChange={handleChange} required />*/}
                                 <div className="form-check form-switch">
                                     <label className="form-check-label" htmlFor="allDayCheck">All Day</label>
                                     <input className="form-check-input" type="checkbox" id="allDayCheck" name="allDay" checked={eventInfo.allDay} onChange={handleChange} />
@@ -119,4 +120,12 @@ export default function CalendarModal() {
             </div >
         </div >
     );
+}
+
+const fixDateModal = (date, allDay) => {
+    let newFormat = new Date(date);
+    let month = newFormat.getMonth() < 10 ? "0" + newFormat.getMonth() : newFormat.getMonth();
+    let outputDate = newFormat.getFullYear() + "-" + month + "-" + newFormat.getDate();
+    
+    return allDay ? outputDate : outputDate + "T" + newFormat.toTimeString().substring(0,5);
 }
