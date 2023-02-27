@@ -67,7 +67,7 @@ const LeaderBoardItem = ({ item, playMusic, liked = false }) => {
           <span className='neonText'>{item.originalArtist}</span>
         </p>
         <p>
-          <span className='neonText'>{item.submittedOn}</span>
+          <span className='neonText'>{item.submittedOn.substring(0,10)}</span>
         </p>
       </div>
       <div className='col d-flex'>
