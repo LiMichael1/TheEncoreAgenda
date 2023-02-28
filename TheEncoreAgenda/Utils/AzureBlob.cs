@@ -3,7 +3,8 @@ using Azure.Storage.Blobs.Models;
 
 namespace TheEncoreAgenda.Utils
 {
-    public class AzureBlob
+	// https://stackoverflow.com/questions/71601195/how-to-upload-file-to-azure-blob-storage
+	public class AzureBlob
     {
         private readonly string _connectionString = "DefaultEndpointsProtocol=https;AccountName=encorestorage;AccountKey=A+uN8BgAQ3MXPtQr9vLLbQ8MNm+Z06l1Dlz2uSfeIOGvU9wtu1eFmiO+NzrY6fjctwFkljshb8rw+ASt3FParg==;EndpointSuffix=core.windows.net";
         private readonly string _containerName = "audiocontainer";
@@ -15,7 +16,23 @@ namespace TheEncoreAgenda.Utils
             _blobService = new BlobServiceClient(_connectionString);
         }
 
-        public async Task<string?> Upload(IFormFile file)
+		public bool Delete(string fileName)
+		{
+			try
+			{
+				_blobContainer = _blobService.GetBlobContainerClient(_containerName);
+				BlobClient blobClient = _blobContainer.GetBlobClient(fileName);
+				blobClient.Delete();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				return false;
+			}
+		}
+
+		public async Task<string?> Upload(IFormFile file)
         {
             if(file.Length > 0)
             {

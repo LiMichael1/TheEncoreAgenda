@@ -1,37 +1,38 @@
 import React, { useState } from 'react';
 import authService from '../api-authorization/AuthorizeService';
 
-const ChangeUserNameForm = () => {
+const ChangeUserNameForm = ({ set }) => {
   const [userName, setUserName] = useState('');
 
-  const handleChange = (event) => setUserName(event.target.name);
+  const handleChange = (event) => setUserName(event.target.value);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     const token = await authService.getAccessToken();
 
     const res = await fetch('/api/profile/username', {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'text/plain',
-      },
-      body: userName,
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userName),
     });
 
-    const data = await res.text();
+      const data = await res.text();
 
-    console.log(data);
+      set(data);
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <input
         type='text'
-        name='userName'
         className='form-control'
         value={userName}
         onChange={handleChange}
-      />
+          />
+      <button className='btn btn-success' type='submit'>Submit</button>
     </form>
   );
 };

@@ -51,7 +51,7 @@ namespace TheEncoreAgenda.Controllers
                                             SubmittedOn = x.SubmittedOn,
                                             AudioPath = x.AudioPath,
                                             NumberOfLikes = x.NumberOfLikes,
-                                            UserName = x.User.Email,
+                                            UserName = x.User.UserName,
                                         })
                                         .OrderByDescending(x => x.NumberOfLikes)
                                         .ToListAsync();
@@ -83,7 +83,7 @@ namespace TheEncoreAgenda.Controllers
                                             SubmittedOn = x.SubmittedOn,
                                             AudioPath = x.AudioPath,
                                             NumberOfLikes = x.NumberOfLikes,
-                                            UserName = x.User.Email,
+                                            UserName = x.User.UserName,
                                         })
                                         .OrderByDescending(x => x.NumberOfLikes)
                                         .ToListAsync();
@@ -116,7 +116,7 @@ namespace TheEncoreAgenda.Controllers
                                                SubmittedOn = x.SubmittedOn,
                                                AudioPath = x.AudioPath,
                                                NumberOfLikes = x.NumberOfLikes,
-                                               UserName = x.User.Email,
+                                               UserName = x.User.UserName,
                                            })
                                            .SingleOrDefaultAsync();
                                       
@@ -250,14 +250,27 @@ namespace TheEncoreAgenda.Controllers
             {
                 return NotFound();
             }
-            var audio = await _context.Audios.FindAsync(id);
+
+			var audio = await _context.Audios.FindAsync(id);
             if (audio == null)
             {
                 return NotFound();
             }
 
-            _context.Audios.Remove(audio);
+			string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (audio.UserId != userId) return Unauthorized("Not the Creator");
+
+
+			_context.Audios.Remove(audio);
+
             await _context.SaveChangesAsync();
+
+            string[] split = audio.AudioPath.Split('/');
+            string fileName = split[split.Length - 1];
+
+            bool flag =  _azureBlob.Delete(fileName);
+
+            if (!flag) return StatusCode(500);
 
             return NoContent();
         }
