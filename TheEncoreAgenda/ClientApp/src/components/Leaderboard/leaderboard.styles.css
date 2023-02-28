@@ -160,3 +160,15 @@
     color: orange;
 }
 
+.filter-field {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-family: cursive;
+    outline: none;
+    text-align: center;
+}
+
+.filter-field:focus {
+    border-bottom: 3px solid white;
+}

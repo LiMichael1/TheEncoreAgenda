@@ -26,8 +26,7 @@ export default function CalendarModal() {
     }
 
     async function saveEvent() {
-        // do all the stuff
-        await fetch('/api/CalendarEvents', {
+        const event = await fetch('/api/CalendarEvents', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -35,21 +34,26 @@ export default function CalendarModal() {
             body: JSON.stringify(eventInfo)
         });
 
-        setEvents([...events, eventInfo ]);
+        const data = await event.json();
+
+        setEvents([...events, data ]);
         setIsOpen(false);
         setEventInfo(defaultEventInfo);
 
     }
 
-    function deleteEvent() {
+    async function deleteEvent(id) {
 
-        //await fetch('/api/CalendarEvents', {
-        //    method: 'DELETE',
-            
-        //});
+        try {
+            await fetch('/api/CalendarEvents/' + id, {
+                method: 'DELETE',
 
-        setIsOpen(false);
-        setEventInfo(defaultEventInfo);
+            });
+            setIsOpen(false);
+            setEventInfo(defaultEventInfo);
+        } catch (ex) {
+            console.log(ex);
+        }
     }
 
     function handleChange(event) {

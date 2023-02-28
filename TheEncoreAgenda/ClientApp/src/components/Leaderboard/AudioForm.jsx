@@ -35,6 +35,8 @@ const AudioForm = ({ data = defaultState, file = null, addItem = () => { }, lead
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        if (leaderboardId === 0) alert(`Can't post on General Leaderboard`);
+
         const audioFile = fileInputRef.current.files[0];
 
         if (audioFile === null) {
@@ -61,9 +63,20 @@ const AudioForm = ({ data = defaultState, file = null, addItem = () => { }, lead
             });
 
             const data = res.data;
-            addItem(data);
 
-            if (res.status === 201 && leaderboardId !== 0) navigate('/leaderboard/' + leaderboardId);
+            if (res.status === 201) {
+                alert('posted');
+                if (leaderboardId !== 0) {
+                    addItem(data);
+
+                    if (page === 'leaderboard') {
+                        console.log(data);
+                    } else {
+                        navigate('/leaderboard/' + leaderboardId);
+
+                    }
+                }
+            }
         } catch (ex) {
             console.log(ex);
             alert(ex);

@@ -58,7 +58,7 @@ const LeaderBoardItem = ({ item, playMusic, liked = false }) => {
       <div className='col-4 mt-3'>
         {/* Information Here */}
         <p>
-          <span className='userText'>{item.userName}</span>
+          <span className='userText'>{item.userName ? item.userName : 'Anonymous'}</span>
         </p>
         <p>
           <span className='neonText'>{item.song}</span>

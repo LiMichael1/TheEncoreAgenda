@@ -12,12 +12,17 @@ import axios from 'axios';
 import { isExpired } from 'react-jwt'
 import Cookies from 'js-cookie';
 
+const defaultTitle = `Champion's LeaderBoard`;
+
 const LeaderBoard = ({ id = 0 }) => {
     const [items, setItems] = useState([]);
+    const [filteredItems, setFilteredItems] = useState([]);
+    const [filterField, setFilteredField] = useState('');
     const [music, setMusic] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const [votes, setVotes] = useState([]);
     const [matchVotes, setMatchVotes] = useState({});
+    const [title, setTitle] = useState(defaultTitle);
 
     useEffect(() => {
         const fetchBoardData = async () => {
@@ -39,8 +44,6 @@ const LeaderBoard = ({ id = 0 }) => {
                     
                 }
 
-
-
                 let res;
 
                 try {
@@ -53,7 +56,6 @@ const LeaderBoard = ({ id = 0 }) => {
                     alert(ex);
                 }
                 
-
                 const data = res.data;
 
                 setVotes(data);
@@ -69,8 +71,35 @@ const LeaderBoard = ({ id = 0 }) => {
         getVotes();
     }, []);
 
+    useEffect(() => {
+        const getTitle = async () => {
+            try {
+                const res = await fetch('/api/calendarEvents/EventName/' + id);
+                const data = await res.text();
+
+                setTitle('Event: ' + data);
+            } catch (ex) {
+                setTitle(defaultTitle);
+            }
+        }
+
+        if (id > 0) {
+            getTitle();
+        } else {
+            setTitle(defaultTitle);
+        }
+        
+    }, [id]);
+
+    useEffect(() => {
+        const search = filterField.toLowerCase();
+        const filtered = items.filter((item) => item.song.toLocaleLowerCase().includes(search) ||
+                                                item.originalArtist.toLocaleLowerCase().includes(search));
+        setFilteredItems(filtered);
+    }, [items, filterField]);
+
     const addItem = (item) => {
-        setItems({ ...items, item });
+        setItems([ ...items, item ]);
         setModalVisible(false);
     }
 
@@ -78,12 +107,19 @@ const LeaderBoard = ({ id = 0 }) => {
 
     const showModal = () => setModalVisible(true);
 
+    const handleFilterChange = (event) => {
+        setFilteredField(event.target.value);
+    }
+
     return (
         <div className='leaderBoard'>
-            <h2 className='page-header-text'>Champion's LeaderBoard</h2>
+            <h2 className='page-header-text'>{title}</h2>
             <div className='d-flex justify-content-between'>
                 <div>
                     <AudioPlayer src={music} />
+                </div>
+                <div>
+                    <input type='text' name='filter' className='filter-field' value={filterField} onChange={handleFilterChange} />
                 </div>
                 <div>
                     <button
@@ -99,7 +135,7 @@ const LeaderBoard = ({ id = 0 }) => {
             </div>
 
             {items.length > 0 ? (
-                items.map((item, index) => {
+                filteredItems.map((item, index) => {
                     let liked = false;
                     if (matchVotes[item.audioId] && matchVotes[item.audioId] === 1) {
                         liked = true;

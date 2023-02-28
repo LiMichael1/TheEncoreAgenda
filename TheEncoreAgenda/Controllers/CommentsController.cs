@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TheEncoreAgenda.Data;
 using TheEncoreAgenda.Models;
+using TheEncoreAgenda.DTO;
 
 namespace TheEncoreAgenda.Controllers
 {
@@ -40,33 +41,52 @@ namespace TheEncoreAgenda.Controllers
         [HttpGet("audio/{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(List<Comment>), (StatusCodes.Status200OK))]
+        [ProducesResponseType(typeof(List<CommentDTO>), (StatusCodes.Status200OK))]
 
-        public async Task<ActionResult<IEnumerable<Comment>>> GetCommentsByAudioId(int id)
+        public async Task<ActionResult<IEnumerable<CommentDTO>>> GetCommentsByAudioId(int id)
         {
             if (_context.Comments == null)
             {
                 return NotFound();
             }
 
-            return await _context.Comments.Where(x => x.AudioId == id).ToListAsync();
+            return await _context.Comments
+                                 .Select(x => new CommentDTO
+                                 {
+                                     CommentId = x.CommentId,
+                                     AudioId = x.AudioId,
+                                     Message = x.Message,
+                                     UserName = x.User.Email,
+                                 })
+                                 .Where(x => x.AudioId == id)
+                                 .ToListAsync();
         }
 
         // GET: api/Comments/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(Comment), (StatusCodes.Status200OK))]
+        [ProducesResponseType(typeof(CommentDTO), (StatusCodes.Status200OK))]
 
-        public async Task<ActionResult<Comment>> GetComment(int id)
+        public async Task<ActionResult<CommentDTO>> GetComment(int id)
         {
           if (_context.Comments == null)
           {
               return NotFound();
           }
-            var comment = await _context.Comments.FindAsync(id);
+            CommentDTO? comment = await _context.Comments
+                                        .Where(x => x.CommentId == id)
+                                        .Select(x => new CommentDTO
+                                        {
+                                            CommentId = x.CommentId,
+                                            AudioId = x.AudioId,
+                                            Message = x.Message,
+                                            UserName = x.User.Email,
+                                        })
+                                        .SingleOrDefaultAsync();
 
-            if (comment == null)
+
+			if (comment == null)
             {
                 return NotFound();
             }
