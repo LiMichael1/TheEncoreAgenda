@@ -51,6 +51,7 @@ export default function CalendarModal() {
             });
             setIsOpen(false);
             setEventInfo(defaultEventInfo);
+            setEvents([...events])
         } catch (ex) {
             console.log(ex);
         }
@@ -117,7 +118,7 @@ export default function CalendarModal() {
                     <div className="modal-footer">
                         <button type="submit" className="btn btn-primary" onClick={() => saveEvent()}>Save</button>
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => setIsOpen(false)}>Cancel</button>
-                        <button type="button" id="btnDelete" className="btn btn-warning" onClick={deleteEvent}>Delete</button>
+                        <button type="button" id="btnDelete" className="btn btn-warning" onClick={() => deleteEvent(eventInfo.id)}>Delete</button>
                     </div>
                 </div >
             </div >

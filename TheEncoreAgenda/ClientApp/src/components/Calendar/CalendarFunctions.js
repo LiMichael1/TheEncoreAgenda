@@ -40,14 +40,14 @@ let monthAndYear = document.getElementById("monthAndYear");
 export function next() {
     currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
     currentMonth = (currentMonth + 1) % 12;
-    console.log(currentMonth + " " + currentYear);
+
     return [currentMonth, currentYear];
 }
 
 export function previous() {
     currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
     currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
-    console.log(currentMonth + " " + currentYear);
+
     return[currentMonth, currentYear];
 }
 
