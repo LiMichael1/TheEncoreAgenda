@@ -73,6 +73,7 @@ html {
 body {
   margin-bottom: 60px;
 }
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -80,4 +81,8 @@ body {
   overflow: scroll;
   white-space: nowrap;
   line-height: 60px;
+}
+
+.fa-6x{
+    font-size: 6em;
 }
