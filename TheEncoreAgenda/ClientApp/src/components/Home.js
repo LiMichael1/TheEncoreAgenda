@@ -5,22 +5,111 @@ export class Home extends Component {
 
     render() {
         return (
-            <div>
-                <h1>Welcome!</h1>
-                <p>Join an online community of Karaoke lovers where you can:</p>
-                <ul>
-                    <li>Post your own recordings of songs we offer</li>
-                    <li>Upload your own songs from your device</li>
-                    <li>Interact with the community by voting and commenting on other's posts</li>
-                    <li>Participate in limited time events</li>
-                </ul>
-                <p>To help you get started:</p>
-                <ul>
-                    <li><strong>Visit the all time <a href="/Leaderboard">Champions Leaderboard</a>.</strong> Here you can <code>post</code> your recordings, <code>vote</code> and <code>comment</code> on other's as well. This is a long standing leaderboard <code>seperate</code> from other events' leaderboards.</li>
-                    <li><strong>View available events and create your own</strong>. Visit the Calendar page where you can view official events and participate on their leaderboards as well as schedule your own events <code>Soon adding the capability to invite friends to custom events</code> </li>
-                    <li><strong>Create your own account now!</strong> Join our community and rise to the top of the charts!</li>
-            </ul>
-            </div>
+            <>
+                <section className="hero">
+                    <div className="position-relative">
+                        <div className="row">
+                            <div className="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
+                                <h1>Welcome!</h1>
+                                <p>
+                                    Join an online community of Karaoke lovers!
+                                </p>
+                                
+                                <p>Create your own account now! Join our community and rise to the top of the charts!</p>
+
+                            </div>
+                            <div className="col-lg-6 order-1 order-lg-2 text-center">
+                                <div className="col-11">
+                                    <i className="bi bi-music-note-list fa-6x m-4" />
+                                    <i className="bi bi-calendar-plus-fill fa-6x m-4" />
+                                </div>
+                                <div className="col-11">
+                                    <i className="bi bi-chat-heart fa-6x m-4" />
+                                    <i className="bi bi-vinyl-fill fa-6x m-4" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section className="p-2 section-glow-border">
+                    <div className="container">
+                        <div className="section-header">
+                            <h2>To help you get started</h2>
+                        </div>
+                        <div className="row gy-4">
+                            <div className="col-lg-4 col-md-6">
+                                <div className="glow-border">
+                                    <div className="group-item position-relative">
+                                        <div className="icon">
+                                            <i className="bi bi-music-note" />
+                                        </div>
+                                    
+                                        <p>Post your own recordings of songs we offer</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-4 col-md-6">
+                                <div className="glow-border">
+                                    <div className="group-item position-relative">
+                                        <div className="icon">
+                                            <i className="bi bi-music-note-beamed" />
+                                        </div>
+
+                                        <p>Upload your own songs from your device</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-4 col-md-6">
+                                <div className="glow-border">
+                                    <div className="group-item position-relative">
+                                        <div className="icon">
+                                            <i className="bi bi-music-note" />
+                                        </div>
+
+                                        <p>Vote and comment on others' posts</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-4 col-md-6">
+                                <div className="glow-border">
+                                    <div className="group-item position-relative">
+                                        <div className="icon">
+                                            <i className="bi bi-music-note-beamed" />
+                                        </div>
+
+                                        <p>Participate in limited time events</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-4 col-md-6">
+                                <div className="glow-border">
+                                    <div className="group-item position-relative">
+                                        <div className="icon">
+                                            <i className="bi bi-music-note" />
+                                        </div>
+
+                                        <p>Visit the all time <a href="/Leaderboard">Champions Leaderboard</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-4 col-md-6">
+                                <div className="glow-border">
+                                    <div className="group-item position-relative">
+                                        <div className="icon">
+                                            <i className="bi bi-music-note-beamed" />
+                                        </div>
+
+                                        <p>View and create events on the calendar</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </section>
+            
+                
+            </>
         );
     }
 }
