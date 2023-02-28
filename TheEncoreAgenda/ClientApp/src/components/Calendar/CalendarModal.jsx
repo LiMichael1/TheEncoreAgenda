@@ -51,7 +51,7 @@ export default function CalendarModal() {
             });
             setIsOpen(false);
             setEventInfo(defaultEventInfo);
-            setEvents([...events])
+            setEvents(events.filter(event => event.id !== id));
         } catch (ex) {
             console.log(ex);
         }
