@@ -79,6 +79,7 @@ const LeaderBoardItem = ({ item, playMusic, liked = false }) => {
           >
             <i className='bi bi-chat-fill'></i>
           </Link>
+
           <Link to='#' className='edit-btn'>
             <i className='bi bi-pen'></i>
           </Link>
