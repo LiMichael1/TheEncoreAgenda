@@ -75,9 +75,6 @@ namespace TheEncoreAgenda.Controllers
 
             List<Vote> votes = await _context.Votes.Where(x => x.UserId.Equals(userId)).ToListAsync();
 
-
-            if (votes.Count == 0) return NotFound("User has not liked anything yet!");
-
             return Ok(votes);
         }
 

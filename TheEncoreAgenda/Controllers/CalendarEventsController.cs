@@ -34,6 +34,26 @@ namespace TheEncoreAgenda.Controllers
             return Ok(await _context.CalendarEvents.ToListAsync());
         }
 
+        [HttpGet("EventName/{id}")]
+        public async Task<ActionResult<CalendarEvent>> GetEventNameById(int id)
+        {
+            if (id < 1) return BadRequest();
+
+            if(_context.CalendarEvents == null)
+            {
+                return NotFound();
+            }
+
+            CalendarEvent calendarEvent = await _context.CalendarEvents.FindAsync(id);
+
+            if(calendarEvent == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(calendarEvent.Title);
+        }
+
         // GET: api/CalendarEvents/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
