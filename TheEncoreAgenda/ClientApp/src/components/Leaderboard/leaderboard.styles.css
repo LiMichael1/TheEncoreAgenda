@@ -47,6 +47,10 @@
   transition: background-color 0.3s ease-out;
 }
 
+.board-card:hover {
+    background-color: purple;
+}
+
 /* Buttons */
 
 .glow-button {
@@ -156,3 +160,15 @@
     color: orange;
 }
 
+.filter-field {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-family: cursive;
+    outline: none;
+    text-align: center;
+}
+
+.filter-field:focus {
+    border-bottom: 3px solid white;
+}
