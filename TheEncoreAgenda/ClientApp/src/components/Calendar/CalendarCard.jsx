@@ -11,6 +11,7 @@ export default function CalendarCard(props) {
                     <h3 id="monthAndYear">{getCurrentMonth(calendar.month)} {calendar.year}</h3>
                 </div>
                 <div className="col card-icons">
+                    {/*handles the next and previous arrows to change month displayed on calendar*/}
                     <i
                         className="bi bi-arrow-left-short"
                         id="previous"

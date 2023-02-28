@@ -20,12 +20,12 @@ export class Home extends Component {
                             </div>
                             <div className="col-lg-6 order-1 order-lg-2 text-center">
                                 <div className="col-11">
-                                    <i className="bi bi-music-note-list fa-6x m-4" />
-                                    <i className="bi bi-calendar4-event fa-6x m-4" />
+                                    <i className="bi bi-music-note-list fa-6x m-4 blue-glow" />
+                                    <i className="bi bi-calendar4-event fa-6x m-4 pink-glow" />
                                 </div>
                                 <div className="col-11">
-                                    <i className="bi bi-chat-heart fa-6x m-4" />
-                                    <i className="bi bi-vinyl-fill fa-6x m-4" />
+                                    <i className="bi bi-chat-heart fa-6x m-4 pink-glow" />
+                                    <i className="bi bi-vinyl-fill fa-6x m-4 blue-glow" />
                                 </div>
                             </div>
                         </div>
