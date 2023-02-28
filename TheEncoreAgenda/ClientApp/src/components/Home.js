@@ -21,7 +21,7 @@ export class Home extends Component {
                             <div className="col-lg-6 order-1 order-lg-2 text-center">
                                 <div className="col-11">
                                     <i className="bi bi-music-note-list fa-6x m-4" />
-                                    <i className="bi bi-calendar-plus-fill fa-6x m-4" />
+                                    <i className="bi bi-calendar4-event fa-6x m-4" />
                                 </div>
                                 <div className="col-11">
                                     <i className="bi bi-chat-heart fa-6x m-4" />
