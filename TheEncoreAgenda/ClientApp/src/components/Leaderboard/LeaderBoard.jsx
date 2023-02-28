@@ -39,10 +39,12 @@ const LeaderBoard = ({ id = 0 }) => {
             if (await authService.isAuthenticated()) {
                 const token = await authService.getAccessToken();
 
+                console.log(token);
+
                 // log out after jwt expired
-                if (isExpired(token)) {
+                //if (isExpired(token)) {
                     
-                }
+                //}
 
                 let res;
 
