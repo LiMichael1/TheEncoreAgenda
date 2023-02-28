@@ -143,3 +143,30 @@ tr {
     color: red;
     background-color: white;
 }
+
+.fa-6x {
+    font-size: 6em;
+}
+
+.section-header{
+    text-align: center;
+    padding-bottom: 60px;
+}
+
+.section-glow-border {
+    border: 2px solid rgba(234, 57, 184, 1);
+    box-shadow: 0 0 25px rgba(234, 57, 184, .9), 0 0 50px rgba(234, 57, 184, .4);
+    padding-bottom: 20px;
+}
+
+.glow-border {
+    margin: 10px;
+    border: 2px solid rgba(68, 217, 232, 1);
+    box-shadow: 0 0 10px rgba(68, 217, 232, .9), 0 0 20px rgba(68, 217, 232, .4);
+    padding: 5px;
+    text-align: center;
+}
+
+section{
+    margin-bottom: 60px;
+}
