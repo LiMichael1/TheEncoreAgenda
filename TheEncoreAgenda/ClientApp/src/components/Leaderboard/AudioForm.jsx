@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import authService from '../api-authorization/AuthorizeService';
 import axios from 'axios';
+import Spinner from '../global/Spinner/Spinner.component';
 
 const defaultState = {
     song: '',
@@ -10,6 +11,7 @@ const defaultState = {
 
 const AudioForm = ({ data = defaultState, file = null, addItem = () => { }, leaderboardId = 0, page='leaderboard' }) => {
     const [audio, setAudio] = useState(defaultState);
+    const [sending, setSending] = useState(false);
     const fileInputRef = useRef();
     const navigate = useNavigate();
 
@@ -55,6 +57,7 @@ const AudioForm = ({ data = defaultState, file = null, addItem = () => { }, lead
         formData.append('upload', audioFile);
 
         try {
+            setSending(true);
             const res = await axios.post('/api/audios', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -81,6 +84,7 @@ const AudioForm = ({ data = defaultState, file = null, addItem = () => { }, lead
             console.log(ex);
             alert(ex);
         }
+        setSending(false);
     };
 
     return (
@@ -116,7 +120,7 @@ const AudioForm = ({ data = defaultState, file = null, addItem = () => { }, lead
             </div>
             <div>
                 <button type='submit' className='btn btn-success'>
-                    Create
+                    {sending ? <Spinner /> : 'Create' }
                 </button>
             </div>
 

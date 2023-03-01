@@ -173,7 +173,14 @@
 }
 
 .audioBtn {
-  color: red;
-  background: none;
-  border: none;
+    background: none;
+    border: none;
+    font-size: 50px;
+    color: white;
+    transition: all 0.3s ease-in-out;
+}
+
+.highlight {
+    text-shadow: 0 0 7px #fff, 0 0 10px #fff;
+    transform: translateY(-7px);
 }
