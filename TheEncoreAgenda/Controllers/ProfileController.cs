@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using IdentityModel.Client;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ namespace TheEncoreAgenda.Controllers
 			_context = context;
 		}
 
+		// GET: /api/profile
 		[HttpGet]
 		public async Task<ActionResult<UserDTO>> GetProfile()
 		{
@@ -43,24 +45,46 @@ namespace TheEncoreAgenda.Controllers
 			return Ok(user);
 		}
 
+
+		// PATCH: /api/profile/username
 		[HttpPatch("username")]
-		public async Task<ActionResult> ChangeUserName([FromBody]string userName) {
-			return Ok(userName);
+		public async Task<ActionResult<ApplicationUser>> ChangeUserName([FromBody] string userName) {
+			string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-			//string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			ApplicationUser? user = await _context.Users.FindAsync(userId);
 
-			//ApplicationUser? user = await _context.Users.FindAsync(userId);
+			if (user == null) return BadRequest(user);
 
-			//if(user == null) return BadRequest(user);
+			user.UserName = userName;
 
-			//user.UserName = userName;
-			
-			//// Update DB set 
-			//_context.Update(user);
-			//// Save Changes on DB
-			//await _context.SaveChangesAsync();
+			// Update DB set 
+			_context.Update(user);
+			// Save Changes on DB
+			await _context.SaveChangesAsync();
 
-			//return Ok(user);
+			return Ok(user.UserName);
+		}
+
+
+		// PATCH: /api/profile/email
+		[HttpPatch("email")]
+		public async Task<ActionResult<ApplicationUser>> ChangeEmail([FromBody] string email)
+		{
+			string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+			ApplicationUser? user = await _context.Users.FindAsync(userId);
+
+			if (user == null) return BadRequest(user);
+
+			user.Email = email;
+			user.NormalizedEmail = email.ToUpper();
+
+			// Update DB set 
+			_context.Update(user);
+			// Save Changes on DB
+			await _context.SaveChangesAsync();
+
+			return Ok(user.Email);
 		}
 	}
 }

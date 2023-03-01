@@ -3,59 +3,113 @@ import { Link } from 'react-router-dom';
 import './profile.styles.css';
 import authService from '../api-authorization/AuthorizeService';
 import LeaderBoardItem from '../Leaderboard/LeaderBoardItem';
+import ChangeUserNameForm from './ChangeUserNameForm';
+import ChangeEmailForm from './ChangeEmailForm';
+import Modal from '../global/Modal/Modal';
+import Spinner from '../global/Spinner/Spinner.component'
 
 const defaultUserInfo = {
-  id: 0,
-  userName: '',
-  email: '',
-  audios: [],
+    id: '',
+    userName: '',
+    email: '',
+    audios: [],
 };
 
 const Profile = () => {
-  const [userInfo, setUserInfo] = useState(defaultUserInfo);
+    const [userInfo, setUserInfo] = useState(defaultUserInfo);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [form, setForm] = useState(1);
 
-  useEffect(() => {
-    const getUserInfo = async () => {
-      const token = await authService.getAccessToken();
-      const res = await fetch('/api/profile', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    useEffect(() => {
+        const getUserInfo = async () => {
+            const token = await authService.getAccessToken();
+            const res = await fetch('/api/profile', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
 
-      const data = await res.json();
+            const data = await res.json();
 
-      console.log(data);
-      setUserInfo(data);
+            setUserInfo(data);
+        };
+
+        getUserInfo();
+    }, []);
+
+    const setUserName = (userName) => {
+        setUserInfo({ ...userInfo, userName: userName });
+        setModalVisible(false);
     };
 
-    getUserInfo();
-  }, []);
+    const setEmail = (email) => {
+        setUserInfo({ ...userInfo, email: email });
+        setModalVisible(false);
+    }
 
-  const { id, userName, email, audios } = userInfo;
+    const showModal = (i) => {
+        switch (i) {
+            case 1:
+            default:
+                setForm(1);
+                setModalVisible(true);
+                break;
+            case 2:
+                setForm(2);
+                setModalVisible(true);
+                break;
+
+        }
+    }
+
+    const whichForm = () => {
+        switch (form) {
+            default:
+            case 1:
+                return <ChangeUserNameForm set={setUserName} />;
+                break;
+            case 2:
+                return <ChangeEmailForm set={setEmail} />;
+                break;
+        }
+    }
+
+    const { id, userName, email, audios } = userInfo;
 
     return (
-      <div>
-          <h5>UserName: <span className='userText'>{userName}</span></h5>
-          <h5>Email: <span className='userText'>{email}</span></h5>
+        <div>
+            {id !== '' ?
+                <div>
+                    <h5>UserName: <span className='userText' onDoubleClick={() => showModal(1)}>{userName}</span></h5>
 
-      {audios.length > 0
-        ? audios.map((audio) => {
-            return (
-              <>
-                <LeaderBoardItem item={audio} />
-                <Link
-                  to={`/leaderboard/${audio.calendarEventId}`}
-                  className='backBtn'
-                >
-                  Go to Event
-                </Link>
-              </>
-            );
-          })
-        : 'Nothing Here so Far'}
-    </div>
-  );
+
+                    <h5>Email: <span className='userText' onDoubleClick={() => showModal(2)}>{email}</span></h5>
+
+                    {audios.length > 0
+                        ? audios.map((audio, index) => {
+                            return (
+                                <div key={index}>
+                                    <LeaderBoardItem item={audio} />
+                                    <Link
+                                        to={`/leaderboard/${audio.calendarEventId}`}
+                                        className='backBtn'
+                                    >
+                                        Go to Event
+                                    </Link>
+                                </div>
+                            );
+                        })
+                        : 'Nothing Here so Far'}
+                    <Modal title={form === 1 ? 'Change UserName' : 'Change Email'} show={modalVisible} setShow={setModalVisible}>
+                        {
+                            whichForm()
+                        }
+                    </Modal>
+                </div>
+                : <Spinner />
+            }
+        </div>
+    );
 };
 
 export default Profile;

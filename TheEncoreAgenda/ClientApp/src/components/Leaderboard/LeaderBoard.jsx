@@ -105,6 +105,10 @@ const LeaderBoard = ({ id = 0 }) => {
         setModalVisible(false);
     }
 
+    const deleteItem = (audioId) => {
+        setItems(items.filter(x => x.audioId !== audioId));
+    }
+
     const playMusic = (URL) => setMusic(URL);
 
     const showModal = () => setModalVisible(true);
@@ -143,7 +147,7 @@ const LeaderBoard = ({ id = 0 }) => {
                         liked = true;
                     }
 
-                    return <LeaderBoardItem key={index} item={item} playMusic={playMusic} liked={liked} />
+                    return <LeaderBoardItem key={index} item={item} playMusic={playMusic} liked={liked} del={deleteItem} />
 
                 })
             ) : (
