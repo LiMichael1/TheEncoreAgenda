@@ -209,3 +209,24 @@ section{
 
 }
 
+.cal-glow-button {
+    cursor: pointer;
+    font-size: 20px;
+    padding: 3px;
+    text-align: center;
+    color: rgb(230, 0, 120);
+    background-color: transparent;
+    border-radius: 10px;
+    border: 2px solid rgb(0, 180, 230);
+    font-weight: bold;
+    transition: all 0.3s ease-in-out 0s;
+    margin-right: 10px;
+}
+
+.cal-glow-button:hover {
+    box-shadow: 0 0 5px -1px rgb(0, 180, 230), 0 0 6px -1px rgb(0, 180, 230) inset;
+    text-shadow: 0 0 5px rgb(230, 0, 120), 0 0 10px rgb(230, 0, 120);
+    text-decoration: none;
+    color: rgb(230, 0, 120);
+    transform: translateY(-5px);
+}
