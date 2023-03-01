@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import authService from '../api-authorization/AuthorizeService';
 
-const LeaderBoardItem = ({ item, playMusic, liked = false }) => {
+const LeaderBoardItem = ({ item, playMusic, liked = false, del = () => { } }) => {
     const [likes, setLikes] = useState(item.numberOfLikes);
     const [like, setLike] = useState(liked);
 
     useEffect(() => {
         setLike(liked);
-    }, [liked])
+    }, [liked]);
 
     const likeClick = async() => {
         const audioId = item.audioId;
@@ -32,6 +32,31 @@ const LeaderBoardItem = ({ item, playMusic, liked = false }) => {
             console.log(ex);
         }
     };
+
+    const deleteClick = async () => {
+        const audioId = item.audioId;
+        const token = await authService.getAccessToken();
+
+        try {
+            const res = await fetch('/api/audios/' + audioId, {
+                method: 'delete',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (res.status === 204) {
+                del(audioId);
+                console.log('Succssfully Deleted: ' + audioId);
+            }
+
+            if (res.status === 401) {
+                alert('You can only delete your own posts');
+            }
+        } catch (ex) {
+            console.log(ex);
+        }
+    }
 
   return (
     <div className='row board-card'>
@@ -83,7 +108,7 @@ const LeaderBoardItem = ({ item, playMusic, liked = false }) => {
           <Link to='#' className='edit-btn'>
             <i className='bi bi-pen'></i>
           </Link>
-          <Link to='#' className='delete-btn'>
+                  <Link to='#' className='delete-btn' onClick={() => deleteClick() }>
             <i className='bi bi-x'></i>
           </Link>
         </div>

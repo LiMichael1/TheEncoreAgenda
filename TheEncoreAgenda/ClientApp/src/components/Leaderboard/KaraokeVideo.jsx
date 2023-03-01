@@ -29,7 +29,7 @@ const KaraokeVideo = ({ setFormData }) => {
 
   return (
     <div>
-      <select onChange={handleChange}>
+      <select onChange={handleChange} className='form-control'>
         <option value=''>Choose Song</option>
         {links.map((link, index) => (
           <option

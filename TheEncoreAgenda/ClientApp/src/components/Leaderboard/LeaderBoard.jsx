@@ -101,8 +101,12 @@ const LeaderBoard = ({ id = 0 }) => {
     }, [items, filterField]);
 
     const addItem = (item) => {
-        setItems([ ...items, item ]);
+        setItems([...items, item]);
         setModalVisible(false);
+    }
+
+    const deleteItem = (audioId) => {
+        setItems(items.filter(x => x.audioId !== audioId));
     }
 
     const playMusic = (URL) => setMusic(URL);
@@ -116,7 +120,7 @@ const LeaderBoard = ({ id = 0 }) => {
     return (
         <div className='leaderBoard'>
             <h2 className='page-header-text'>{title}</h2>
-            <div className='d-flex justify-content-between'>
+            <div className='d-flex justify-content-between align-items-center'>
                 <div>
                     <AudioPlayer src={music} />
                 </div>
@@ -143,7 +147,7 @@ const LeaderBoard = ({ id = 0 }) => {
                         liked = true;
                     }
 
-                    return <LeaderBoardItem key={index} item={item} playMusic={playMusic} liked={liked} />
+                    return <LeaderBoardItem key={index} item={item} playMusic={playMusic} liked={liked} del={deleteItem} />
 
                 })
             ) : (

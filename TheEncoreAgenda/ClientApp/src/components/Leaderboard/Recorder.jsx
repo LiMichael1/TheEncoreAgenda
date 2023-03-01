@@ -12,9 +12,9 @@ const Recorder = ({ setFile }) => {
   });
 
   useEffect(() => {
-      if (stream !== null || recorder !== null) {
-          console.log(stream, recorder);
-      } 
+    if (stream !== null || recorder !== null) {
+      console.log(stream, recorder);
+    }
   }, [stream, recorder]);
 
   const handleCaptureBtnClick = async (event) => {
@@ -32,21 +32,32 @@ const Recorder = ({ setFile }) => {
   };
 
   const handleStopBtnClick = (event) => {
-    recorder.stop();
-    stream.getTracks().forEach((track) => {
-      track.stop();
-      track.enabled = false;
-    });
+      recorder.stop();
+      try {
+          stream.getTracks().forEach((track) => {
+              track.stop();
+              track.enabled = false;
+          });
+      } catch (ex) {
+          console.log(ex);
+      }
+    
     stream = null;
     setBtnStates({ ...btnStates, stop: true, capture: false });
   };
 
   const getStreamAndRecorder = async () => {
-    const desktopStream = await navigator.mediaDevices.getDisplayMedia({
-      preferCurrentTab: true,
-      video: true,
-      audio: true,
-    });
+    const desktopStream = await navigator.mediaDevices.getDisplayMedia(
+      {
+        preferCurrentTab: true,
+        video: true,
+        audio: true,
+      },
+      {
+        videoBitsPerSecond: 0,
+        mimeType: 'audio/webm',
+      }
+    );
 
     const voiceStream = await navigator.mediaDevices.getUserMedia({
       video: false,
@@ -64,7 +75,17 @@ const Recorder = ({ setFile }) => {
 
     console.log('Stream', stream);
 
-    const rec = new MediaRecorder(stream, {
+    const audioStream = new MediaStream();
+    for (const track of stream.getAudioTracks()) {
+      audioStream.addTrack(track);
+      }
+
+      for (const track of stream.getVideoTracks()) {
+          track.stop();
+      }
+
+
+    const rec = new MediaRecorder(audioStream, {
       mimeType: 'audio/webm; codecs=opus',
     });
 
@@ -73,7 +94,7 @@ const Recorder = ({ setFile }) => {
     rec.ondataavailable = (e) => blobs.push(e.data);
 
     rec.onstop = async () => {
-      const blob = new Blob(blobs, { type: 'audio/meg; codecs=opus' });
+      const blob = new Blob(blobs, { type: 'audio/mpeg; codecs=opus' });
       const blobURL = window.URL.createObjectURL(blob);
 
       console.log(blobURL);
@@ -84,7 +105,7 @@ const Recorder = ({ setFile }) => {
 
       console.log(file);
 
-      const fileURL = window.URL.createObjectURL(file);
+      let fileURL = window.URL.createObjectURL(file);
 
       // Export Karaoke File
       audioRef.current.src = fileURL;
@@ -92,7 +113,7 @@ const Recorder = ({ setFile }) => {
       setFile(file);
     };
 
-    return { stream, rec };
+    return { audioStream, rec };
   };
 
   return (
