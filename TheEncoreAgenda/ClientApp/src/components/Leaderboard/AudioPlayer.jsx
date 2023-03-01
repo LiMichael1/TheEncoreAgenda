@@ -9,6 +9,7 @@ const AudioPlayer = ({ src = '' }) => {
         const playMusic = () => {
             if (src !== null) {
                 setPlay(true);
+                playerRef.current.pause();
                 playerRef.current.load();
                 playerRef.current.play();
             }
@@ -32,8 +33,8 @@ const AudioPlayer = ({ src = '' }) => {
         <>
             <button type='button' className={`audioBtn ${play ? 'highlight' : ''} `}  onClick={() => toggleAudio()}>
                 {play ?
-                    <i class="bi bi-pause-circle"></i> :
-                    <i class="bi bi-play-circle"></i>
+                    <i className="bi bi-pause-circle"></i> :
+                    <i className="bi bi-play-circle"></i>
                 }
             </button>
 

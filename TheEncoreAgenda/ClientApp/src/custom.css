@@ -157,14 +157,35 @@ tr {
     border: 2px solid rgba(234, 57, 184, 1);
     box-shadow: 0 0 25px rgba(234, 57, 184, .9), 0 0 50px rgba(234, 57, 184, .4);
     padding-bottom: 20px;
+    border-radius: 5px;
 }
 
 .glow-border {
     margin: 10px;
     border: 2px solid rgba(68, 217, 232, 1);
+    border-radius: 5px;
     box-shadow: 0 0 10px rgba(68, 217, 232, .9), 0 0 20px rgba(68, 217, 232, .4);
     padding: 5px;
     text-align: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.glow-border:hover {
+    background-color: rgba(68, 135, 232, .9);
+    transform: scale(1.3);
+}
+
+.glow-border a {
+    font-family: 'Permanent Marker', cursive;
+    display: inline-block;
+    color: rgba(233, 50, 50, .9);
+    font-weight: bold;
+    text-decoration: none;
+    transition: transform 0.3s ease-in-out;
+}
+
+.glow-border a:hover {
+    transform: scale(1.25);
 }
 
 .blue-glow {
@@ -179,5 +200,12 @@ tr {
 
 section{
     margin-bottom: 60px;
+}
+
+.hero,
+.glow-border,
+.section-glow-border{
+    font-family: cursive;
+
 }
 

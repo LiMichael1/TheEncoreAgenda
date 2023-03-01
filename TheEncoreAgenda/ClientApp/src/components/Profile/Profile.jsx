@@ -80,10 +80,10 @@ const Profile = () => {
         <div>
             {id !== '' ?
                 <div>
-                    <h5>UserName: <span className='userText' onDoubleClick={() => showModal(1)}>{userName}</span></h5>
+                    <h5>UserName: <span className='userText profile-fields' onDoubleClick={() => showModal(1)}>{userName}</span></h5>
 
 
-                    <h5>Email: <span className='userText' onDoubleClick={() => showModal(2)}>{email}</span></h5>
+                    <h5>Email: <span className='userText profile-fields' onDoubleClick={() => showModal(2)}>{email}</span></h5>
 
                     {audios.length > 0
                         ? audios.map((audio, index) => {
