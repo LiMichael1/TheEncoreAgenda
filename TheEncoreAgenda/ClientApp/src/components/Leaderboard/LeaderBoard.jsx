@@ -101,7 +101,7 @@ const LeaderBoard = ({ id = 0 }) => {
     }, [items, filterField]);
 
     const addItem = (item) => {
-        setItems([ ...items, item ]);
+        setItems([...items, item]);
         setModalVisible(false);
     }
 

@@ -32,11 +32,16 @@ const Recorder = ({ setFile }) => {
   };
 
   const handleStopBtnClick = (event) => {
-    recorder.stop();
-    stream.getTracks().forEach((track) => {
-      track.stop();
-      track.enabled = false;
-    });
+      recorder.stop();
+      try {
+          stream.getTracks().forEach((track) => {
+              track.stop();
+              track.enabled = false;
+          });
+      } catch (ex) {
+          console.log(ex);
+      }
+    
     stream = null;
     setBtnStates({ ...btnStates, stop: true, capture: false });
   };
@@ -73,7 +78,12 @@ const Recorder = ({ setFile }) => {
     const audioStream = new MediaStream();
     for (const track of stream.getAudioTracks()) {
       audioStream.addTrack(track);
-    }
+      }
+
+      for (const track of stream.getVideoTracks()) {
+          track.stop();
+      }
+
 
     const rec = new MediaRecorder(audioStream, {
       mimeType: 'audio/webm; codecs=opus',
