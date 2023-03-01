@@ -8,13 +8,7 @@ import { ShowProvider } from './ShowContext';
 function Calendar() {
 
     const [calendar, setCalendar] = useState({ month: getCurrentMonthDate(), year: getCurrentYear() });
-    //const [show, setShow] = useState(false);
-    //const [eventType, setEventType] = useState("");
-
-    //const modalData = {
-    //    show: [show, setShow],
-    //    eventType: [eventType, setEventType]
-    //};
+    
 
     return (
         <div className="container">
@@ -31,16 +25,3 @@ function Calendar() {
 
 export default Calendar;
 
-//function getMonthAndYear(next = false, prev = false, month = 0, year = 0) {
-//    if (!next && !prev) {
-//        month = getCurrentMonthDate();
-//        year = getCurrentYear();
-//    }
-//    else if (next) {
-
-//    }
-//    else if (prev) {
-
-//    }
-//    return [ month, year ];
-//}

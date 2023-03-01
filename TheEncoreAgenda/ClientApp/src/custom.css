@@ -167,6 +167,16 @@ tr {
     text-align: center;
 }
 
+.blue-glow {
+    color: rgba(68, 217, 232, 1);
+    text-shadow: 0 0 10px rgba(68, 217, 232, .9), 0 0 20px rgba(68, 217, 232, .4);
+}
+
+.pink-glow {
+    color: rgba(234, 57, 184, 1);
+    text-shadow: 0 0 10px rgba(234, 57, 184, .9), 0 0 20px rgba(234, 57, 184, .4);
+}
+
 section{
     margin-bottom: 60px;
 }
