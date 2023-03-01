@@ -117,6 +117,7 @@ namespace TheEncoreAgenda.Controllers
                                                AudioPath = x.AudioPath,
                                                NumberOfLikes = x.NumberOfLikes,
                                                UserName = x.User.UserName,
+                                               CalendarEventId = x.CalendarEventId,
                                            })
                                            .SingleOrDefaultAsync();
                                       
