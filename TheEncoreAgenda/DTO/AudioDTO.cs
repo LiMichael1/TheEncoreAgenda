@@ -9,6 +9,7 @@
         public DateTime? SubmittedOn { get; set; } = DateTime.Now;
         public string? AudioPath { get; set; } = String.Empty;
         public string? EventName { get; set; } = String.Empty;
+        public int? CalendarEventId { get; set; } = 0;
 
         public int? NumberOfLikes { get; set; } = 0;
         public int? NumberOfDislikes { get; set; } = 0;
