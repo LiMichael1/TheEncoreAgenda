@@ -120,7 +120,7 @@ const LeaderBoard = ({ id = 0 }) => {
     return (
         <div className='leaderBoard'>
             <h2 className='page-header-text'>{title}</h2>
-            <div className='d-flex justify-content-between'>
+            <div className='d-flex justify-content-between align-items-center'>
                 <div>
                     <AudioPlayer src={music} />
                 </div>

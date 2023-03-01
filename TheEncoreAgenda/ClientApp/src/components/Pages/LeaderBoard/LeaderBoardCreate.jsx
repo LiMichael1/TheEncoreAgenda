@@ -14,6 +14,7 @@ const LeaderBoardCreate = () => {
   const [file, setFile] = useState(null);
   const [formData, setFormData] = useState(defaultState);
 
+
   return (
     <div className='d-flex justify-content-between'>
       <div className='col-4'>
