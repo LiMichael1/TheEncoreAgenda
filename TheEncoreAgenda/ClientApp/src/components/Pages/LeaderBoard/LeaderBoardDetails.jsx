@@ -43,7 +43,7 @@ const LeaderBoardDetails = () => {
     return (
         <div>
             {itemReady ? <LeaderBoardItem item={item} /> : ''}
-            <Link to='/leaderboard' className='backBtn'>Back to the LeaderBoard</Link>
+            <Link to={`/leaderboard/${item.calendarEventId}`} className='backBtn'>Back to the LeaderBoard</Link>
 
             <CommentForm addComment={addComment} audioId={id} />
             {comments.map((comment, index) => (
