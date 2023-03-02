@@ -1,16 +1,13 @@
 import './leaderboard.styles.css';
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import LeaderBoardItem from './LeaderBoardItem';
 import Modal from '../global/Modal/Modal';
 import AudioPlayer from './AudioPlayer';
 import AudioForm from './AudioForm';
 import Spinner from '../global/Spinner/Spinner.component';
-import { boardData } from '../../utils/sampleData';
+//import { boardData } from '../../utils/sampleData';
 import authService from '../api-authorization/AuthorizeService';
 import axios from 'axios';
-import { isExpired } from 'react-jwt'
-import Cookies from 'js-cookie';
 
 const defaultTitle = `Champion's LeaderBoard`;
 
@@ -20,7 +17,7 @@ const LeaderBoard = ({ id = 0 }) => {
     const [filterField, setFilteredField] = useState('');
     const [music, setMusic] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
-    const [votes, setVotes] = useState([]);
+    //const [votes, setVotes] = useState([]);
     const [matchVotes, setMatchVotes] = useState({});
     const [title, setTitle] = useState(defaultTitle);
 
@@ -60,7 +57,7 @@ const LeaderBoard = ({ id = 0 }) => {
                 
                 const data = res.data;
 
-                setVotes(data);
+                //setVotes(data);
 
                 const match = {};
 

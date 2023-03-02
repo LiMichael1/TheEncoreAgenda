@@ -154,6 +154,7 @@
   justify-content: center;
 }
 
+
 .liked,
 .liked i {
   color: orange;
@@ -183,6 +184,13 @@
 .highlight {
     text-shadow: 0 0 7px #fff, 0 0 10px #fff;
     transform: translateY(-7px);
+}
+
+.res-items{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 @media screen and (max-width: 768px) {
