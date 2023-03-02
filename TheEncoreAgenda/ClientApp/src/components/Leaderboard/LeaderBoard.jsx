@@ -95,10 +95,17 @@ const LeaderBoard = ({ id = 0 }) => {
 
     useEffect(() => {
         const search = filterField.toLowerCase();
-        const filtered = items.filter((item) => item.song.toLocaleLowerCase().includes(search) ||
-                                                item.originalArtist.toLocaleLowerCase().includes(search) ||
-                                                item.userName.toLocaleLowerCase().includes(search));
-        setFilteredItems(filtered);
+
+        if (search !== '') {
+            const filtered = items.filter((item) => item.song.toLocaleLowerCase().includes(search) ||
+                item.originalArtist.toLocaleLowerCase().includes(search) ||
+                item.userName.toLocaleLowerCase().includes(search));
+
+            setFilteredItems(filtered);
+        } else {
+            setFilteredItems(items);
+        }
+        
     }, [items, filterField]);
 
     const addItem = (item) => {
