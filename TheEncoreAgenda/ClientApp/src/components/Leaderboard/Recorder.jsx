@@ -38,6 +38,9 @@ const Recorder = ({ setFile }) => {
               track.stop();
               track.enabled = false;
           });
+
+          stream = null;
+
       } catch (ex) {
           console.log(ex);
       }
@@ -57,7 +60,11 @@ const Recorder = ({ setFile }) => {
         videoBitsPerSecond: 0,
         mimeType: 'audio/webm',
       }
-    );
+      );
+
+      for (const track in desktopStream.getVideoTracks()) {
+          track.stop();
+      }
 
     const voiceStream = await navigator.mediaDevices.getUserMedia({
       video: false,
@@ -65,7 +72,6 @@ const Recorder = ({ setFile }) => {
     });
 
     const tracks = [
-      ...desktopStream.getVideoTracks(),
       ...mergeAudioStreams(desktopStream, voiceStream),
     ];
 
@@ -75,17 +81,17 @@ const Recorder = ({ setFile }) => {
 
     console.log('Stream', stream);
 
-    const audioStream = new MediaStream();
-    for (const track of stream.getAudioTracks()) {
-      audioStream.addTrack(track);
-      }
+    //const audioStream = new MediaStream();
+    //for (const track of stream.getAudioTracks()) {
+    //  audioStream.addTrack(track);
+    //  }
 
-      for (const track of stream.getVideoTracks()) {
-          track.stop();
-      }
+    //  for (const track of stream.getVideoTracks()) {
+    //      track.stop();
+    //  }
 
 
-    const rec = new MediaRecorder(audioStream, {
+    const rec = new MediaRecorder(stream, {
       mimeType: 'audio/webm; codecs=opus',
     });
 
@@ -113,7 +119,7 @@ const Recorder = ({ setFile }) => {
       setFile(file);
     };
 
-    return { audioStream, rec };
+    return { stream, rec };
   };
 
   return (
