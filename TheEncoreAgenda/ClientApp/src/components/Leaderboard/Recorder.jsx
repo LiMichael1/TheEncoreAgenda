@@ -62,9 +62,9 @@ const Recorder = ({ setFile }) => {
       }
       );
 
-      for (const track in desktopStream.getVideoTracks()) {
-          track.stop();
-      }
+      //for (const track in desktopStream.getVideoTracks()) {
+      //    track.stop();
+      //}
 
     const voiceStream = await navigator.mediaDevices.getUserMedia({
       video: false,
