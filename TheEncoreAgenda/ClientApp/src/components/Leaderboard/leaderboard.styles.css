@@ -44,11 +44,11 @@
   padding-bottom: 20px;
   margin: 20px auto;
   align-items: center;
-  transition: background-color 0.3s ease-out;
+  transition: all 0.3s linear;
 }
 
 .board-card:hover {
-  background-color: purple;
+    background-color: purple;
 }
 
 /* Buttons */
@@ -183,4 +183,10 @@
 .highlight {
     text-shadow: 0 0 7px #fff, 0 0 10px #fff;
     transform: translateY(-7px);
+}
+
+@media screen and (max-width: 768px) {
+    .res-flex-column {
+        flex-direction: column;
+    }
 }
